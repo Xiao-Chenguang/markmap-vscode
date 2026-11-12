@@ -70,6 +70,24 @@ Open a markdown file. Find the markmap icon on the editor title-bar and click it
 
 ![title button](https://user-images.githubusercontent.com/3139113/110966366-25f0cf00-8390-11eb-9a16-3c4d66712f47.png)
 
+### Keyboard shortcuts
+
+When the markmap preview is focused, the following single-key shortcuts are available. Press <kbd>?</kbd> in the preview to show them.
+
+| Key | Action |
+| --- | --- |
+| `F` | Fit window size |
+| `E` | Expand all nodes |
+| `C` | Collapse all nodes (keep the first level) |
+| `+` / `=` | Zoom in |
+| `-` | Zoom out |
+| `T` | Toggle the node under the cursor |
+| `R` | Toggle the node under the cursor recursively |
+| `?` | Show/hide the shortcut help |
+| `Esc` | Close the shortcut help |
+
+Clicking anywhere on a node folds or unfolds it, not only on its fold anchor. Hold <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> to toggle the whole subtree.
+
 ## Configuration
 
 ### Custom CSS
