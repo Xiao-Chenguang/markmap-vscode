@@ -1,0 +1,22 @@
+---
+name: Feature request
+about: Suggest an improvement for Markmap Plus
+title: "[FEAT] "
+labels: enhancement
+assignees: ''
+---
+
+- [ ] I have searched for existing issues that already requested this feature and found none
+- [ ] This is not something the upstream [markmap-vscode](https://github.com/markmap/markmap-vscode) already does
+
+**What problem does this solve?**
+
+<!-- Describe the situation where the extension falls short. -->
+
+**Proposed solution**
+
+<!-- What you would like to happen. -->
+
+**Alternatives considered**
+
+<!-- Any workaround you use today. -->

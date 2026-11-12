@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Markmap Plus — mindmap preview for VS Code</title>
+    <meta
+      name="description"
+      content="Markmap Plus is an actively maintained fork of markmap-vscode: preview your markdown as an interactive mind map in VS Code."
+    />
+    <link rel="icon" href="icon.png" />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #141a2e;
+        --text: #e8ecf8;
+        --muted: #9aa6c4;
+        --accent: #6d8bff;
+        --accent-2: #22d3ee;
+        --border: #26304d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: radial-gradient(1200px 600px at 50% -10%, #1b2547 0%, var(--bg) 60%);
+        color: var(--text);
+        font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 64px 24px 96px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      header img {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 34px;
+        letter-spacing: -0.02em;
+      }
+      .tagline {
+        margin: 4px 0 0;
+        color: var(--muted);
+      }
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 32px 0 48px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 22px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #08101f;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .btn.secondary {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      h2 {
+        margin: 48px 0 16px;
+        font-size: 22px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+      }
+      th {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      code {
+        padding: 2px 6px;
+        border-radius: 5px;
+        background: var(--panel);
+        font-size: 0.9em;
+      }
+      pre {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--panel);
+        overflow-x: auto;
+      }
+      pre code {
+        padding: 0;
+        background: none;
+      }
+      .note {
+        padding: 16px 20px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 10px 10px 0;
+        background: var(--panel);
+        color: var(--muted);
+      }
+      footer {
+        margin-top: 64px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 14px;
+      }
+      a {
+        color: var(--accent-2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <img src="icon.png" alt="Markmap Plus icon" />
+        <div>
+          <h1>Markmap Plus</h1>
+          <p class="tagline">Preview your markdown as an interactive mind map in VS Code.</p>
+        </div>
+      </header>
+
+      <div class="buttons">
+        <a class="btn" href="https://marketplace.visualstudio.com/items?itemName=xiaochenguang.markmap-plus">Install from VS Code Marketplace</a>
+        <a class="btn secondary" href="https://open-vsx.org/extension/xiaochenguang/markmap-plus">Install from Open VSX</a>
+        <a class="btn secondary" href="https://github.com/Xiao-Chenguang/markmap-plus">Source on GitHub</a>
+      </div>
+
+      <div class="note">
+        Markmap Plus is an independent fork of
+        <a href="https://github.com/markmap/markmap-vscode">markmap-vscode</a> by Gerald, MIT licensed.
+        It is not affiliated with or endorsed by the original author. The fork exists because the
+        upstream project is no longer actively maintained.
+      </div>
+
+      <h2>Why a fork?</h2>
+      <table>
+        <tr>
+          <th></th>
+          <th>markmap-vscode (upstream)</th>
+          <th>Markmap Plus</th>
+        </tr>
+        <tr>
+          <td>Maintenance</td>
+          <td>Inactive</td>
+          <td>Actively maintained</td>
+        </tr>
+        <tr>
+          <td>Extension ID</td>
+          <td><code>gera2ld.markmap-vscode</code></td>
+          <td><code>xiaochenguang.markmap-plus</code></td>
+        </tr>
+        <tr>
+          <td>Settings prefix</td>
+          <td><code>markmap.*</code></td>
+          <td><code>markmapPlus.*</code></td>
+        </tr>
+        <tr>
+          <td>Keyboard shortcuts in the preview</td>
+          <td>—</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Click anywhere on a node to fold it</td>
+          <td>—</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Everything else</td>
+          <td>✅</td>
+          <td>✅ inherited</td>
+        </tr>
+      </table>
+
+      <h2>Migrating from markmap-vscode</h2>
+      <ol>
+        <li>
+          Uninstall or disable the original <code>markmap-vscode</code>. Both register a markdown
+          custom editor, so keeping both installed leads to unpredictable behaviour.
+        </li>
+        <li>Install Markmap Plus.</li>
+        <li>
+          Rename your settings — the keys changed so the two extensions can coexist:
+          <table>
+            <tr>
+              <th>Old key</th>
+              <th>New key</th>
+            </tr>
+            <tr>
+              <td><code>markmap.defaultOptions</code></td>
+              <td><code>markmapPlus.defaultOptions</code></td>
+            </tr>
+            <tr>
+              <td><code>markmap.customCSS</code></td>
+              <td><code>markmapPlus.customCSS</code></td>
+            </tr>
+          </table>
+        </li>
+      </ol>
+
+      <h2>Keyboard shortcuts</h2>
+      <p>Available while the preview has focus. Press <kbd>?</kbd> in the preview to see them.</p>
+      <table>
+        <tr><th>Key</th><th>Action</th></tr>
+        <tr><td><code>F</code></td><td>Fit window size</td></tr>
+        <tr><td><code>E</code></td><td>Expand all</td></tr>
+        <tr><td><code>C</code></td><td>Collapse all</td></tr>
+        <tr><td><code>+</code> / <code>=</code></td><td>Zoom in</td></tr>
+        <tr><td><code>-</code></td><td>Zoom out</td></tr>
+        <tr><td><code>T</code></td><td>Toggle the node under the cursor</td></tr>
+        <tr><td><code>R</code></td><td>Toggle the node under the cursor recursively</td></tr>
+        <tr><td><code>?</code></td><td>Show/hide the shortcut help</td></tr>
+      </table>
+
+      <h2>Configuration</h2>
+      <pre><code>{
+  "markmapPlus.defaultOptions": "{ \"colorFreezeLevel\": 2 }",
+  "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }"
+}</code></pre>
+
+      <footer>
+        Built on <a href="https://markmap.js.org/">markmap</a>. Original VS Code integration by
+        <a href="https://github.com/gera2ld">Gerald</a>. MIT licensed — the original copyright
+        notice is preserved.
+      </footer>
+    </div>
+  </body>
+</html>

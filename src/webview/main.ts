@@ -1,10 +1,15 @@
 import { toPNG } from '@markmap/canvas';
-import { toPlainText, walkTree, type MarkmapNode } from '@markmap/core';
+import {
+  findNode,
+  toPlainText,
+  walkTree,
+  type MarkmapNode,
+} from '@markmap/core';
 import { MarkmapViewElement } from '@markmap/element';
 import { mathContent, remarkMath } from '@markmap/plugin-math';
 import { defaultContentPlugins, toSVGString } from '@markmap/render';
 import { defaultToolbarItems } from '@markmap/toolbar';
-import { resolveViewOptions } from '@markmap/view';
+import { resolveViewOptions, type Markmap } from '@markmap/view';
 import { debounce } from 'es-toolkit';
 import type { HostMessage, ImageFormat, WebviewMessage } from '../protocol';
 import { remarkLocalImages } from './local-images';
@@ -63,6 +68,8 @@ new ResizeObserver(() => {
 }).observe(view);
 
 document.addEventListener('click', handleLinkClick);
+document.addEventListener('click', handleNodeClick);
+document.addEventListener('keydown', handleKeyDown);
 
 const handlers: {
   [T in HostMessage['type']]: (
@@ -177,6 +184,105 @@ function handleLinkClick(event: MouseEvent) {
     event.preventDefault();
     post({ type: 'openFile', data: href });
   }
+}
+
+/**
+ * Fold or unfold a node by clicking anywhere on it, not only on its fold
+ * anchor. Ctrl or Cmd toggles the whole subtree, same as the anchor.
+ */
+function handleNodeClick(event: MouseEvent) {
+  if (event.defaultPrevented) return;
+  const mm = view.mm;
+  if (!mm) return;
+  const target = mm.hitAt(...mm.layoutPoint(event.clientX, event.clientY));
+  // Fold anchors, note dots and links are handled by the view's own gestures.
+  if (target?.kind !== 'node') return;
+  const node = mm.tree && findNode(mm.tree, target.nodeId);
+  if (!node?.children.length) return;
+  toggleNode(mm, target.nodeId, event.ctrlKey || event.metaKey);
+}
+
+function toggleNode(mm: Markmap, id: string, recursive: boolean) {
+  if (!recursive) mm.toggle(id);
+  else if (mm.foldedIds.has(id)) mm.expandAll(id);
+  else mm.foldAll(id);
+}
+
+/** Single-key shortcuts, available while the preview has focus. */
+const keyHandlers: Record<string, () => void> = {
+  f: () => view.mm?.fit(),
+  e: () => view.mm?.expandAll(),
+  c: () => view.mm?.foldToLevel(1),
+  '+': () => view.mm?.zoomIn(),
+  '=': () => view.mm?.zoomIn(),
+  '-': () => view.mm?.zoomOut(),
+  t: () => {
+    if (view.mm && active) toggleNode(view.mm, active.id, false);
+  },
+  r: () => {
+    if (view.mm && active) toggleNode(view.mm, active.id, true);
+  },
+  '?': () => toggleHelp(),
+};
+
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+  const target = event.target as HTMLElement | null;
+  if (target?.closest?.('input, textarea, select, [contenteditable]')) return;
+  if (event.key === 'Escape') {
+    hideHelp();
+    return;
+  }
+  const handler = keyHandlers[event.key.toLowerCase()];
+  if (!handler) return;
+  event.preventDefault();
+  handler();
+}
+
+const SHORTCUTS: [string[], string][] = [
+  [['F'], 'Fit window size'],
+  [['E'], 'Expand all'],
+  [['C'], 'Collapse all'],
+  [['+', '='], 'Zoom in'],
+  [['-'], 'Zoom out'],
+  [['T'], 'Toggle the node under the cursor'],
+  [['R'], 'Toggle the node under the cursor recursively'],
+  [['?'], 'Show/hide this help'],
+];
+
+let helpEl: HTMLDivElement | undefined;
+
+function toggleHelp() {
+  if (helpEl?.isConnected) {
+    hideHelp();
+    return;
+  }
+  helpEl = document.createElement('div');
+  helpEl.className = 'shortcut-help';
+  const title = document.createElement('div');
+  title.className = 'shortcut-help-title';
+  title.textContent = 'Keyboard Shortcuts';
+  const list = document.createElement('ul');
+  for (const [keys, label] of SHORTCUTS) {
+    const item = document.createElement('li');
+    const keyList = document.createElement('span');
+    keys.forEach((key, index) => {
+      if (index) keyList.append(' / ');
+      const kbd = document.createElement('kbd');
+      kbd.textContent = key;
+      keyList.append(kbd);
+    });
+    const text = document.createElement('span');
+    text.textContent = label;
+    item.append(keyList, text);
+    list.append(item);
+  }
+  helpEl.append(title, list);
+  document.body.append(helpEl);
+}
+
+function hideHelp() {
+  helpEl?.remove();
 }
 
 async function exportImage(format: ImageFormat) {

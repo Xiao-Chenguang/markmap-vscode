@@ -1,13 +1,13 @@
 ---
 name: Bug report
-about: For bugs that exist in markmap for VSCode
+about: For bugs in Markmap Plus (the fork)
 title: "[BUG] "
 labels: bug
 assignees: ''
 ---
 
 - [ ] I have searched for existing issues that already reported this problem and found none
-- [ ] The bug for the VSCode plugin
+- [ ] The bug is in this fork, not in the upstream [markmap-vscode](https://github.com/markmap/markmap-vscode)
   <!-- Note: for bugs in the REPL, please report to https://github.com/markmap/markmap -->
 - [ ] The bug is also present in [the web version of VSCode](https://vscode.dev) or GitHub Codespaces
 
