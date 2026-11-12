@@ -104,6 +104,30 @@
           "default": "",
           "markdownDescription": "Custom CSS for the page around the map. To change colors, set the `--mm-*` properties on `markmap-view`, see <https://markmap.js.org/docs/guide/themes-and-layouts>. Rules cannot reach inside the map, and they do not apply to exported HTML.",
           "editPresentation": "multilineText"
+        },
+        "markmapPlus.theme": {
+          "type": "string",
+          "default": "",
+          "enum": ["", "classic", "cards", "minimal"],
+          "enumDescriptions": [
+            "Use the theme from the document's frontmatter, or the default",
+            "Classic markmap look",
+            "Nodes drawn as cards",
+            "Minimal, text-only nodes"
+          ],
+          "markdownDescription": "Theme for every map. Wins over the `theme` in a document's frontmatter."
+        },
+        "markmapPlus.layout": {
+          "type": "string",
+          "default": "",
+          "enum": ["", "tree", "two-sided", "org-chart"],
+          "enumDescriptions": [
+            "Use the layout from the document's frontmatter, or the default",
+            "Branches grow to the right",
+            "Branches grow to both sides",
+            "Top-down organisation chart"
+          ],
+          "markdownDescription": "Layout for every map. Wins over the `layout` in a document's frontmatter."
         }
       }
     }

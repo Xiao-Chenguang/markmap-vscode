@@ -23,6 +23,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Node search / filter | — | ✅ |
 | Fold state remembered per file | — | ✅ |
 | Markdown outline export | — | ✅ |
+| Theme and layout settings | frontmatter only | ✅ settings too |
 | Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
@@ -119,6 +120,17 @@ markmap-view {
 ### Default Options
 
 Default options for Markmap as JSON, see [Options](https://markmap.js.org/docs/guide/options). Options in the frontmatter of a document win over these.
+
+### Theme and Layout
+
+`markmapPlus.theme` and `markmapPlus.layout` set the look of every map, so you do not have to repeat frontmatter in each document. They win over the `theme` and `layout` in a document's frontmatter.
+
+| Setting | Values |
+| --- | --- |
+| `markmapPlus.theme` | `classic`, `cards`, `minimal` |
+| `markmapPlus.layout` | `tree`, `two-sided`, `org-chart` |
+
+Leave either empty to use the document's frontmatter, or the default.
 
 ## Credits
 

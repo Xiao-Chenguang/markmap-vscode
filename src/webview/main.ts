@@ -102,6 +102,11 @@ const handlers: {
   setCSS(css) {
     customStyle.textContent = css;
   },
+  setAppearance({ theme, layout }) {
+    // The element's attributes win over the document's frontmatter.
+    if (theme) view.theme = theme;
+    if (layout) view.layout = layout;
+  },
   toggleNode(recursive) {
     const mm = view.mm;
     if (!mm || !active) return;

@@ -19,6 +19,8 @@ export type HostMessage =
     }
   | { type: 'setCursor'; data: number }
   | { type: 'setCSS'; data: string }
+  /** Theme and layout chosen in the settings, overriding the frontmatter. */
+  | { type: 'setAppearance'; data: { theme?: string; layout?: string } }
   | { type: 'toggleNode'; data: boolean }
   | { type: 'exportImage'; data: ImageFormat }
   /** Ask for the visible tree as a nested Markdown list. */

@@ -19,6 +19,7 @@ Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension 
 - Added node search: matching branches stay open, everything else folds away, and the previous fold state is restored when the search is cleared
 - Remember the folded branches per file, so reopening a document shows the map the way you left it
 - Added a Markdown export that writes the branches currently open as a nested list
+- Added `markmapPlus.theme` and `markmapPlus.layout` settings, so the look can be set once instead of in every document's frontmatter
 
 ## 0.3.1
 

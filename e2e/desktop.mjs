@@ -107,6 +107,19 @@ try {
     t.ok('fold state is restored after reopening', restoredFold.includes(foldTarget), `${JSON.stringify(foldedBefore)} -> ${JSON.stringify(restoredFold)}`);
   }
 
+  // The theme and layout settings win over the document's frontmatter.
+  const settingsPath = join(dataDir, 'User', 'settings.json');
+  const settings = JSON.parse(readFileSync(settingsPath, 'utf8'));
+  writeFileSync(settingsPath, JSON.stringify({ ...settings, 'markmapPlus.theme': 'cards', 'markmapPlus.layout': 'org-chart' }));
+  await sleep(2500);
+  const appearance = await reopened.evaluate(() => {
+    const el = document.querySelector('markmap-view');
+    return { theme: el.theme, layout: el.layout };
+  });
+  t.ok('theme and layout settings apply', appearance.theme === 'cards' && appearance.layout === 'org-chart', JSON.stringify(appearance));
+  writeFileSync(settingsPath, JSON.stringify(settings));
+  await sleep(1500);
+
   const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()), md: (b) => /^- /m.test(b.toString()) };
   for (const format of ['svg', 'png', 'html', 'md']) {
     const rows = await chooseExport(page, frame, format, format === 'md' ? 'Markdown' : format);

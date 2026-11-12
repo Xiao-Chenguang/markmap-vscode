@@ -185,6 +185,16 @@ export class MarkmapEditor implements CustomTextEditorProvider {
         .get<string>('customCSS');
       post({ type: 'setCSS', data: css || '' });
     };
+    const updateAppearance = () => {
+      const config = workspace.getConfiguration('markmapPlus');
+      post({
+        type: 'setAppearance',
+        data: {
+          theme: config.get<string>('theme') || undefined,
+          layout: config.get<string>('layout') || undefined,
+        },
+      });
+    };
     const update = () => {
       post({
         type: 'setContent',
@@ -210,6 +220,7 @@ export class MarkmapEditor implements CustomTextEditorProvider {
     } = {
       ready() {
         updateCSS();
+        updateAppearance();
         update();
       },
       editAsText() {
@@ -295,6 +306,12 @@ export class MarkmapEditor implements CustomTextEditorProvider {
       workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration('markmapPlus.defaultOptions')) update();
         if (e.affectsConfiguration('markmapPlus.customCSS')) updateCSS();
+        if (
+          e.affectsConfiguration('markmapPlus.theme') ||
+          e.affectsConfiguration('markmapPlus.layout')
+        ) {
+          updateAppearance();
+        }
       }),
     ];
     webviewPanel.onDidDispose(() => {

@@ -199,6 +199,11 @@
           <td>✅</td>
         </tr>
         <tr>
+          <td>Theme and layout settings</td>
+          <td>frontmatter only</td>
+          <td>✅ settings too</td>
+        </tr>
+        <tr>
           <td>Everything else</td>
           <td>✅</td>
           <td>✅ inherited</td>
@@ -272,8 +277,16 @@
       <h2>Configuration</h2>
       <pre><code>{
   "markmapPlus.defaultOptions": "{ \"colorFreezeLevel\": 2 }",
-  "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }"
+  "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }",
+  "markmapPlus.theme": "cards",
+  "markmapPlus.layout": "org-chart"
 }</code></pre>
+      <p>
+        <code>markmapPlus.theme</code> takes <code>classic</code>, <code>cards</code> or
+        <code>minimal</code>; <code>markmapPlus.layout</code> takes <code>tree</code>,
+        <code>two-sided</code> or <code>org-chart</code>. Leave either empty to use the document's
+        frontmatter, or the default.
+      </p>
 
       <footer>
         Built on <a href="https://markmap.js.org/">markmap</a>. Original VS Code integration by
