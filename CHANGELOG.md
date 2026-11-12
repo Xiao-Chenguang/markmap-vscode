@@ -1,5 +1,24 @@
 # Change Log
 
+> **Markmap Plus** is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald, MIT licensed.
+> Entries below `0.4.0` are inherited from the upstream project and are kept for history.
+> From `0.4.0` on, versions are released independently by this fork.
+
+## 0.4.0
+
+Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension ID.
+
+- Renamed the extension to **Markmap Plus** (`xiaochenguang.markmap-plus`)
+- Renamed the command prefix from `markmap-vscode.*` to `markmap-plus.*`
+- Renamed the custom editor view type from `markmap-vscode.markmap` to `markmap-plus.markmap`
+- Renamed the settings from `markmap.*` to `markmapPlus.*` so both extensions can coexist in a settings file without clashing
+- New icon, so the fork is visually distinguishable from the original
+- Preserved the original MIT copyright notice and added the fork's own
+
+## 0.3.1
+
+- Update `@markmap/*` to 1.1.0 and add e2e tests
+
 ## 0.3.0
 
 Rebuilt on the new `@markmap/*` packages.

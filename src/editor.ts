@@ -55,7 +55,7 @@ function defaultExportUri(document: TextDocument, format: string) {
 
 function readDefaultOptions() {
   const raw = workspace
-    .getConfiguration('markmap')
+    .getConfiguration('markmapPlus')
     .get<string>('defaultOptions');
   try {
     return raw ? JSON.parse(raw) : undefined;
@@ -139,7 +139,7 @@ export class MarkmapEditor implements CustomTextEditorProvider {
     };
     const updateCSS = () => {
       const css = workspace
-        .getConfiguration('markmap')
+        .getConfiguration('markmapPlus')
         .get<string>('customCSS');
       post({ type: 'setCSS', data: css || '' });
     };
@@ -238,8 +238,8 @@ export class MarkmapEditor implements CustomTextEditorProvider {
         if (e.textEditor.document === document) debouncedUpdateCursor();
       }),
       workspace.onDidChangeConfiguration((e) => {
-        if (e.affectsConfiguration('markmap.defaultOptions')) update();
-        if (e.affectsConfiguration('markmap.customCSS')) updateCSS();
+        if (e.affectsConfiguration('markmapPlus.defaultOptions')) update();
+        if (e.affectsConfiguration('markmapPlus.customCSS')) updateCSS();
       }),
     ];
     webviewPanel.onDidDispose(() => {

@@ -7,7 +7,7 @@ import {
 } from 'vscode';
 import { MarkmapEditor } from './editor';
 
-const PREFIX = 'markmap-vscode';
+const PREFIX = 'markmap-plus';
 const VIEW_TYPE = `${PREFIX}.markmap`;
 
 export function activate(context: ExtensionContext) {

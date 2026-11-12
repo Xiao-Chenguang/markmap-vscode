@@ -1,12 +1,15 @@
 {
-  "name": "markmap-vscode",
-  "version": "0.3.1",
-  "description": "Visualize your markdown in VSCode",
-  "author": "Gerald <gera2ld@live.com>",
+  "name": "markmap-plus",
+  "version": "0.4.0",
+  "description": "Markmap mindmap preview for VS Code — an actively maintained fork of markmap-vscode with keyboard shortcuts, node search and more",
+  "author": "Xiao-Chenguang",
+  "contributors": [
+    "Gerald <gera2ld@live.com> (original markmap-vscode)"
+  ],
   "license": "MIT",
-  "displayName": "Markmap",
-  "publisher": "gera2ld",
-  "icon": "assets/favicon.png",
+  "displayName": "Markmap Plus",
+  "publisher": "xiaochenguang",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -16,14 +19,18 @@
   "keywords": [
     "markmap",
     "mindmap",
-    "markdown"
+    "mind map",
+    "markdown",
+    "outline",
+    "visualization",
+    "fork"
   ],
   "activationEvents": [],
   "contributes": {
     "commands": [
       {
-        "command": "markmap-vscode.open",
-        "category": "Markmap",
+        "command": "markmap-plus.open",
+        "category": "Markmap Plus",
         "title": "Open as markmap",
         "icon": {
           "light": "./assets/light.svg",
@@ -31,20 +38,20 @@
         }
       },
       {
-        "command": "markmap-vscode.toggle",
-        "category": "Markmap",
+        "command": "markmap-plus.toggle",
+        "category": "Markmap Plus",
         "title": "Toggle the active node"
       },
       {
-        "command": "markmap-vscode.toggle-recursively",
-        "category": "Markmap",
+        "command": "markmap-plus.toggle-recursively",
+        "category": "Markmap Plus",
         "title": "Toggle the active node recursively"
       }
     ],
     "customEditors": [
       {
-        "viewType": "markmap-vscode.markmap",
-        "displayName": "Markmap",
+        "viewType": "markmap-plus.markmap",
+        "displayName": "Markmap Plus",
         "selector": [
           {
             "filenamePattern": "*.md"
@@ -57,42 +64,42 @@
       "commandPalette": [
         {
           "when": "editorLangId == markdown || editorLangId == mdx",
-          "command": "markmap-vscode.open"
+          "command": "markmap-plus.open"
         },
         {
           "when": "editorLangId == markdown || editorLangId == mdx",
-          "command": "markmap-vscode.toggle"
+          "command": "markmap-plus.toggle"
         },
         {
           "when": "editorLangId == markdown || editorLangId == mdx",
-          "command": "markmap-vscode.toggle-recursively"
+          "command": "markmap-plus.toggle-recursively"
         }
       ],
       "explorer/context": [
         {
           "when": "resourceLangId == markdown || resourceLangId == mdx",
-          "command": "markmap-vscode.open",
+          "command": "markmap-plus.open",
           "group": "navigation"
         }
       ],
       "editor/title": [
         {
           "when": "activeEditor == workbench.editors.files.textFileEditor && (resourceLangId == markdown || resourceLangId == mdx)",
-          "command": "markmap-vscode.open",
+          "command": "markmap-plus.open",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
-      "title": "Markmap",
+      "title": "Markmap Plus",
       "properties": {
-        "markmap.defaultOptions": {
+        "markmapPlus.defaultOptions": {
           "type": "string",
           "default": "",
           "markdownDescription": "Default options for Markmap as JSON, see <https://markmap.js.org/docs/guide/options> for the options. The options in a document win over these, and they do not apply to exported HTML.",
           "editPresentation": "multilineText"
         },
-        "markmap.customCSS": {
+        "markmapPlus.customCSS": {
           "type": "string",
           "default": "",
           "markdownDescription": "Custom CSS for the page around the map. To change colors, set the `--mm-*` properties on `markmap-view`, see <https://markmap.js.org/docs/guide/themes-and-layouts>. Rules cannot reach inside the map, and they do not apply to exported HTML.",
@@ -119,7 +126,14 @@
     "test:e2e:desktop": "node e2e/desktop.mjs",
     "dev:pack": "npx @vscode/vsce pack"
   },
-  "repository": "https://github.com/gera2ld/markmap-vscode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xiao-Chenguang/markmap-plus"
+  },
+  "homepage": "https://github.com/Xiao-Chenguang/markmap-plus#readme",
+  "bugs": {
+    "url": "https://github.com/Xiao-Chenguang/markmap-plus/issues"
+  },
   "main": "dist/extension.js",
   "browser": "dist/extension.js",
   "files": [

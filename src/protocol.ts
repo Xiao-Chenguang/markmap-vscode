@@ -6,7 +6,7 @@ export type HostMessage =
       type: 'setContent';
       data: {
         markdown: string;
-        /** The `markmap.defaultOptions` setting, parsed. */
+        /** The `markmapPlus.defaultOptions` setting, parsed. */
         defaultOptions: unknown;
         /** Webview URL of the document's folder, for relative images. */
         baseUri: string;

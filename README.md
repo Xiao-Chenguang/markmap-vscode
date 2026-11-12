@@ -1,9 +1,48 @@
-# markmap-vscode
+# Markmap Plus
 
-[![vscode](https://img.shields.io/visual-studio-marketplace/v/gera2ld.markmap-vscode)](https://marketplace.visualstudio.com/items?itemName=gera2ld.markmap-vscode)
-[![open vsx](https://img.shields.io/open-vsx/v/gera2ld/markmap-vscode)](https://open-vsx.org/extension/gera2ld/markmap-vscode)
+[![vscode](https://img.shields.io/visual-studio-marketplace/v/xiaochenguang.markmap-plus)](https://marketplace.visualstudio.com/items?itemName=xiaochenguang.markmap-plus)
+[![open vsx](https://img.shields.io/open-vsx/v/xiaochenguang/markmap-plus)](https://open-vsx.org/extension/xiaochenguang/markmap-plus)
 
-This extension integrates [markmap](https://markmap.js.org/) into VSCode.
+> **Markmap Plus is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald ([@gera2ld](https://github.com/gera2ld)).**
+> It is **not** affiliated with or endorsed by the original author. The original project is MIT licensed, and so is this fork.
+> The fork exists because the upstream project is no longer actively maintained; it keeps the upstream feature set and adds improvements on top.
+
+This extension integrates [markmap](https://markmap.js.org/) into VS Code: preview your markdown as an interactive mind map.
+
+## Why a fork?
+
+The upstream `markmap-vscode` has not been updated for a long time and pull requests are not being merged. Markmap Plus is published under its own extension ID so it can be iterated on independently, while staying compatible with the upstream feature set.
+
+| | markmap-vscode (upstream) | Markmap Plus (this fork) |
+| --- | --- | --- |
+| Maintenance | Inactive | Actively maintained |
+| Extension ID | `gera2ld.markmap-vscode` | `xiaochenguang.markmap-plus` |
+| Settings prefix | `markmap.*` | `markmapPlus.*` |
+| Keyboard shortcuts in the preview | — | ✅ |
+| Click anywhere on a node to fold it | — | ✅ |
+| Everything else | ✅ | ✅ (inherited) |
+
+## Migrating from markmap-vscode
+
+1. Uninstall (or disable) the original `markmap-vscode` extension. Both extensions register a markdown custom editor, so keeping both installed leads to unpredictable behaviour.
+2. Install **Markmap Plus**.
+3. Copy your settings over — the keys were renamed to avoid clashing with the original extension:
+
+   | Old key | New key |
+   | --- | --- |
+   | `markmap.defaultOptions` | `markmapPlus.defaultOptions` |
+   | `markmap.customCSS` | `markmapPlus.customCSS` |
+
+   In `settings.json`:
+
+   ```jsonc
+   {
+     "markmapPlus.defaultOptions": "{ \"colorFreezeLevel\": 2 }",
+     "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }"
+   }
+   ```
+
+4. Commands moved from the `Markmap` category to `Markmap Plus` in the Command Palette.
 
 ## Features
 
@@ -46,3 +85,12 @@ markmap-view {
 ### Default Options
 
 Default options for Markmap as JSON, see [Options](https://markmap.js.org/docs/guide/options). Options in the frontmatter of a document win over these.
+
+## Credits
+
+- [markmap](https://github.com/markmap/markmap) — the rendering engine
+- [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald — the original VS Code integration this fork is based on
+
+## License
+
+MIT. See [LICENSE](./LICENSE) — the original copyright notice is preserved.
