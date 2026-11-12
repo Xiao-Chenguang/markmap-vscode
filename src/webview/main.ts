@@ -222,6 +222,7 @@ const keyHandlers: Record<string, () => void> = {
   r: () => {
     if (view.mm && active) toggleNode(view.mm, active.id, true);
   },
+  '/': () => openSearch(),
   '?': () => toggleHelp(),
 };
 
@@ -247,6 +248,7 @@ const SHORTCUTS: [string[], string][] = [
   [['-'], 'Zoom out'],
   [['T'], 'Toggle the node under the cursor'],
   [['R'], 'Toggle the node under the cursor recursively'],
+  [['/'], 'Search nodes'],
   [['?'], 'Show/hide this help'],
 ];
 
@@ -283,6 +285,114 @@ function toggleHelp() {
 
 function hideHelp() {
   helpEl?.remove();
+}
+
+/** Fold state saved when a search starts, restored when it is cleared. */
+let foldBeforeSearch: string[] | undefined;
+let searchEl: HTMLDivElement | undefined;
+let searchInput: HTMLInputElement | undefined;
+let searchCount: HTMLSpanElement | undefined;
+let matches: MarkmapNode[] = [];
+let matchIndex = 0;
+
+function openSearch() {
+  if (!searchEl) {
+    searchEl = document.createElement('div');
+    searchEl.className = 'node-search';
+    searchInput = document.createElement('input');
+    searchInput.type = 'search';
+    searchInput.placeholder = 'Search nodes';
+    searchInput.setAttribute('aria-label', 'Search nodes');
+    searchCount = document.createElement('span');
+    searchCount.className = 'node-search-count';
+    searchEl.append(searchInput, searchCount);
+    document.body.append(searchEl);
+    searchInput.addEventListener('input', () => runSearch(searchInput!.value));
+    searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        stepMatch(event.shiftKey ? -1 : 1);
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        closeSearch();
+      }
+    });
+  }
+  searchEl.hidden = false;
+  searchInput?.focus();
+  searchInput?.select();
+}
+
+function closeSearch() {
+  if (!searchEl) return;
+  searchEl.hidden = true;
+  searchInput!.value = '';
+  runSearch('');
+  view.element.focus();
+}
+
+/** Show only the branches that lead to a match, and jump to the first one. */
+function runSearch(query: string) {
+  const mm = view.mm;
+  if (!mm?.tree) return;
+  const needle = query.trim().toLowerCase();
+  if (!needle) {
+    matches = [];
+    matchIndex = 0;
+    if (foldBeforeSearch) {
+      mm.setFoldedIds(foldBeforeSearch);
+      foldBeforeSearch = undefined;
+    }
+    updateSearchCount();
+    return;
+  }
+  foldBeforeSearch ??= [...mm.foldedIds];
+  matches = [];
+  const keep = new Set<string>();
+  const visit = (node: MarkmapNode, ancestors: string[]) => {
+    const hit = toPlainText(node.content).toLowerCase().includes(needle);
+    if (hit) {
+      matches.push(node);
+      ancestors.forEach((id) => keep.add(id));
+    }
+    node.children.forEach((child) => visit(child, [...ancestors, node.id]));
+  };
+  visit(mm.tree, []);
+  // Fold every node with children that is not on the path to a match. With no
+  // match at all, leave the map as it was rather than folding everything away.
+  const folded: string[] = [];
+  if (matches.length) {
+    let isRoot = true;
+    walkTree(mm.tree, (node) => {
+      // Never fold the root, or the whole map disappears.
+      if (!isRoot && node.children.length && !keep.has(node.id)) {
+        folded.push(node.id);
+      }
+      isRoot = false;
+    });
+  } else {
+    folded.push(...foldBeforeSearch);
+  }
+  mm.setFoldedIds(folded);
+  matchIndex = 0;
+  updateSearchCount();
+  if (matches.length) reveal(matches[0]);
+}
+
+function stepMatch(delta: number) {
+  if (!matches.length) return;
+  matchIndex = (matchIndex + delta + matches.length) % matches.length;
+  updateSearchCount();
+  reveal(matches[matchIndex]);
+}
+
+function updateSearchCount() {
+  if (!searchCount) return;
+  searchCount.textContent = matches.length
+    ? `${matchIndex + 1}/${matches.length}`
+    : searchInput?.value.trim()
+      ? '0'
+      : '';
 }
 
 async function exportImage(format: ImageFormat) {

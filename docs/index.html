@@ -184,6 +184,11 @@
           <td>✅</td>
         </tr>
         <tr>
+          <td>Node search / filter</td>
+          <td>—</td>
+          <td>✅</td>
+        </tr>
+        <tr>
           <td>Everything else</td>
           <td>✅</td>
           <td>✅ inherited</td>
@@ -227,8 +232,18 @@
         <tr><td><code>-</code></td><td>Zoom out</td></tr>
         <tr><td><code>T</code></td><td>Toggle the node under the cursor</td></tr>
         <tr><td><code>R</code></td><td>Toggle the node under the cursor recursively</td></tr>
+        <tr><td><code>/</code></td><td>Search nodes</td></tr>
         <tr><td><code>?</code></td><td>Show/hide the shortcut help</td></tr>
       </table>
+
+      <h2>Search</h2>
+      <p>
+        Press <code>/</code> to search the map. Matching branches stay open and everything else
+        folds away, so a large document collapses to just the parts that match.
+        <code>Enter</code> jumps to the next match, <code>Shift</code>+<code>Enter</code> to the
+        previous one, and <code>Esc</code> clears the search and restores the fold state you had
+        before.
+      </p>
 
       <h2>Configuration</h2>
       <pre><code>{

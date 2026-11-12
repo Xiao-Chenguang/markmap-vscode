@@ -83,3 +83,45 @@ markmap-view {
   color: var(--vscode-keybindingLabel-foreground);
   font: inherit;
 }
+
+.node-search {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1px solid var(--vscode-widget-border, var(--vscode-panel-border));
+  border-radius: 6px;
+  background: var(--vscode-editorWidget-background);
+  box-shadow: 0 2px 8px var(--vscode-widget-shadow);
+  transform: translateX(-50%);
+}
+
+.node-search[hidden] {
+  display: none;
+}
+
+.node-search input {
+  width: 220px;
+  padding: 4px 6px;
+  border: 1px solid var(--vscode-input-border, transparent);
+  border-radius: 4px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  font: 12px var(--vscode-font-family);
+}
+
+.node-search input:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
+}
+
+.node-search-count {
+  min-width: 32px;
+  color: var(--vscode-descriptionForeground);
+  font: 12px var(--vscode-font-family);
+  text-align: right;
+}

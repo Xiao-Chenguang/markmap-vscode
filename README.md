@@ -20,6 +20,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Settings prefix | `markmap.*` | `markmapPlus.*` |
 | Keyboard shortcuts in the preview | — | ✅ |
 | Click anywhere on a node to fold it | — | ✅ |
+| Node search / filter | — | ✅ |
 | Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
@@ -83,10 +84,15 @@ When the markmap preview is focused, the following single-key shortcuts are avai
 | `-` | Zoom out |
 | `T` | Toggle the node under the cursor |
 | `R` | Toggle the node under the cursor recursively |
+| `/` | Search nodes |
 | `?` | Show/hide the shortcut help |
 | `Esc` | Close the shortcut help |
 
 Clicking anywhere on a node folds or unfolds it, not only on its fold anchor. Hold <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> to toggle the whole subtree.
+
+### Search
+
+Press <kbd>/</kbd> to search the map. Matching branches stay open and everything else folds away, so a large document collapses to just the parts that match. <kbd>Enter</kbd> jumps to the next match, <kbd>Shift</kbd>+<kbd>Enter</kbd> to the previous one, and <kbd>Esc</kbd> clears the search and restores the fold state you had before.
 
 ## Configuration
 

@@ -66,6 +66,33 @@ try {
   t.ok('code block in a note is highlighted (lazy chunk loads)', await v(() => !!document.querySelector('.markmap-popover .hljs-keyword')));
   await v(() => document.querySelector('markmap-view').mm.closeNotes());
 
+  // Search: matching branches stay open, the rest folds away, Esc restores.
+  await v(() => document.querySelector('markmap-view').mm.expandAll());
+  await sleep(400);
+  const before = await v(() => document.querySelector('markmap-view').mm.foldedIds.size);
+  await page.keyboard.press('/');
+  await sleep(300);
+  const searchVisible = await v(() => {
+    const el = document.querySelector('.node-search');
+    return !!el && !el.hidden;
+  });
+  t.ok('slash opens the node search', searchVisible);
+  await page.keyboard.type('dot');
+  await sleep(600);
+  const searched = await v(() => ({
+    count: document.querySelector('.node-search-count')?.textContent,
+    folded: document.querySelector('markmap-view').mm.foldedIds.size,
+  }));
+  t.ok('search reports a match', /^1\/\d+$/.test(searched.count || ''), searched.count);
+  t.ok('search folds the branches without a match', searched.folded > before, `${before} -> ${searched.folded}`);
+  await page.keyboard.press('Escape');
+  await sleep(600);
+  const restored = await v(() => ({
+    hidden: document.querySelector('.node-search')?.hidden,
+    folded: document.querySelector('markmap-view').mm.foldedIds.size,
+  }));
+  t.ok('Esc closes the search and restores the fold state', restored.hidden && restored.folded === before, `${restored.folded} vs ${before}`);
+
   const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()) };
   for (const format of ['svg', 'png', 'html']) {
     const rows = await chooseExport(page, frame, format);

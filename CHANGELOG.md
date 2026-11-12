@@ -14,6 +14,9 @@ Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension 
 - Renamed the settings from `markmap.*` to `markmapPlus.*` so both extensions can coexist in a settings file without clashing
 - New icon, so the fork is visually distinguishable from the original
 - Preserved the original MIT copyright notice and added the fork's own
+- Added single-key shortcuts while the preview has focus: <kbd>F</kbd> fit, <kbd>E</kbd> expand all, <kbd>C</kbd> collapse all, <kbd>+</kbd>/<kbd>-</kbd> zoom, <kbd>T</kbd>/<kbd>R</kbd> toggle the node under the cursor, <kbd>/</kbd> search, <kbd>?</kbd> shortcut help
+- Click anywhere on a node to fold it, not only on its fold anchor (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> toggles the whole subtree)
+- Added node search: matching branches stay open, everything else folds away, and the previous fold state is restored when the search is cleared
 
 ## 0.3.1
 
