@@ -20,6 +20,7 @@ Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension 
 - Remember the folded branches per file, so reopening a document shows the map the way you left it
 - Added a Markdown export that writes the branches currently open as a nested list
 - Added `markmapPlus.theme` and `markmapPlus.layout` settings, so the look can be set once instead of in every document's frontmatter
+- Keep multiple previews of the same document in sync when a branch is folded
 
 ## 0.3.1
 

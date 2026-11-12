@@ -1,5 +1,7 @@
 import {
   ExtensionContext,
+  TabInputCustom,
+  TabInputText,
   Uri,
   ViewColumn,
   commands,
@@ -10,11 +12,25 @@ import { MarkmapEditor } from './editor';
 const PREFIX = 'markmap-plus';
 const VIEW_TYPE = `${PREFIX}.markmap`;
 
+/**
+ * The document to act on: the active text editor, or else the file behind the
+ * active tab, so the commands also work while a preview has focus.
+ */
+function activeDocumentUri() {
+  const editor = vscodeWindow.activeTextEditor;
+  if (editor) return editor.document.uri;
+  const input = vscodeWindow.tabGroups.activeTabGroup.activeTab?.input;
+  if (input instanceof TabInputText) return input.uri;
+  if (input instanceof TabInputCustom) return input.uri;
+  return undefined;
+}
+
 export function activate(context: ExtensionContext) {
   const markmapEditor = new MarkmapEditor(context);
   context.subscriptions.push(
     commands.registerCommand(`${PREFIX}.open`, (uri?: Uri) => {
-      uri ??= vscodeWindow.activeTextEditor?.document.uri;
+      uri ??= activeDocumentUri();
+      if (!uri) return;
       commands.executeCommand(
         'vscode.openWith',
         uri,
@@ -34,6 +50,8 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     vscodeWindow.registerCustomEditorProvider(VIEW_TYPE, markmapEditor, {
       webviewOptions: { retainContextWhenHidden: true },
+      // Allow the same document in more than one preview, e.g. side by side.
+      supportsMultipleEditorsPerDocument: true,
     }),
   );
 }

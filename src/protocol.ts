@@ -22,6 +22,8 @@ export type HostMessage =
   /** Theme and layout chosen in the settings, overriding the frontmatter. */
   | { type: 'setAppearance'; data: { theme?: string; layout?: string } }
   | { type: 'toggleNode'; data: boolean }
+  /** Fold state pushed from another preview of the same document. */
+  | { type: 'setFolded'; data: string[] }
   | { type: 'exportImage'; data: ImageFormat }
   /** Ask for the visible tree as a nested Markdown list. */
   | { type: 'exportOutline' };

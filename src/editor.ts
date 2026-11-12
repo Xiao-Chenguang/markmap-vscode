@@ -86,7 +86,8 @@ function foldStateKey(document: TextDocument) {
 }
 
 export class MarkmapEditor implements CustomTextEditorProvider {
-  private webviewPanelMap = new Map<TextDocument, WebviewPanel>();
+  /** Every open preview, so a document can have more than one. */
+  private webviewPanelMap = new Map<TextDocument, Set<WebviewPanel>>();
 
   constructor(private context: ExtensionContext) {}
 
@@ -135,7 +136,12 @@ export class MarkmapEditor implements CustomTextEditorProvider {
   resolveCustomTextEditor(document: TextDocument, webviewPanel: WebviewPanel) {
     const { webview } = webviewPanel;
     const documentDir = Utils.dirname(document.uri);
-    this.webviewPanelMap.set(document, webviewPanel);
+    let panels = this.webviewPanelMap.get(document);
+    if (!panels) {
+      panels = new Set();
+      this.webviewPanelMap.set(document, panels);
+    }
+    panels.add(webviewPanel);
     webview.options = {
       enableScripts: true,
       localResourceRoots: [
@@ -267,6 +273,15 @@ export class MarkmapEditor implements CustomTextEditorProvider {
       },
       foldChanged(ids) {
         saveFoldedIds(ids);
+        // Keep other previews of the same document in step.
+        for (const other of panels) {
+          if (other !== webviewPanel) {
+            other.webview.postMessage({
+              type: 'setFolded',
+              data: ids,
+            } satisfies HostMessage);
+          }
+        }
       },
       async outline(markdown) {
         const targetUri = pendingOutlineUri;
@@ -318,14 +333,20 @@ export class MarkmapEditor implements CustomTextEditorProvider {
       debouncedUpdate.cancel();
       debouncedUpdateCursor.cancel();
       disposables.forEach((disposable) => disposable.dispose());
-      this.webviewPanelMap.delete(document);
+      const remaining = this.webviewPanelMap.get(document);
+      remaining?.delete(webviewPanel);
+      if (remaining && !remaining.size) {
+        this.webviewPanelMap.delete(document);
+      }
     });
   }
 
   toggleActiveNode(document: TextDocument, recursive = false) {
-    this.webviewPanelMap.get(document)?.webview.postMessage({
-      type: 'toggleNode',
-      data: recursive,
-    } satisfies HostMessage);
+    for (const panel of this.webviewPanelMap.get(document) ?? []) {
+      panel.webview.postMessage({
+        type: 'toggleNode',
+        data: recursive,
+      } satisfies HostMessage);
+    }
   }
 }

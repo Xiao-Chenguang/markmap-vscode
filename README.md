@@ -24,6 +24,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Fold state remembered per file | — | ✅ |
 | Markdown outline export | — | ✅ |
 | Theme and layout settings | frontmatter only | ✅ settings too |
+| Multiple previews stay in sync | — | ✅ |
 | Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
@@ -100,6 +101,8 @@ Press <kbd>/</kbd> to search the map. Matching branches stay open and everything
 ### Fold state
 
 The branches you fold are remembered per file, so reopening a document shows the map the way you left it. Node ids are content hashes, so renaming a heading simply drops that node from the saved state instead of breaking it.
+
+If you open the same document in more than one preview, folding a branch in one updates the others.
 
 ### Export
 

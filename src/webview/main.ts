@@ -31,6 +31,8 @@ let appliedOptions: string | undefined;
 let placed = false;
 /** The node under the editor's cursor. */
 let active: MarkmapNode | undefined;
+/** Set while applying a fold state pushed from another preview. */
+let applyingRemoteFold = false;
 
 const view = new MarkmapViewElement();
 view.toolbar = true;
@@ -107,6 +109,12 @@ const handlers: {
     if (theme) view.theme = theme;
     if (layout) view.layout = layout;
   },
+  setFolded(ids) {
+    // Pushed from another preview of the same document; do not echo it back.
+    applyingRemoteFold = true;
+    view.mm?.setFoldedIds(ids);
+    applyingRemoteFold = false;
+  },
   toggleNode(recursive) {
     const mm = view.mm;
     if (!mm || !active) return;
@@ -128,7 +136,9 @@ window.addEventListener('message', (event: MessageEvent<HostMessage>) => {
 // Report fold changes so the host can restore them the next time the file opens.
 view.addEventListener('fold', () => {
   const mm = view.mm;
-  if (mm) post({ type: 'foldChanged', data: [...mm.foldedIds] });
+  if (mm && !applyingRemoteFold) {
+    post({ type: 'foldChanged', data: [...mm.foldedIds] });
+  }
 });
 
 post({ type: 'ready' });

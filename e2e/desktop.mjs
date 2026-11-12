@@ -6,7 +6,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright-core';
 import {
-  chooseExport, createReporter, extensionPath, findNodeId, openSampleAsMarkmap, prepareWorkspace, sleep,
+  chooseExport, createReporter, extensionPath, findNodeId, openSampleAsMarkmap, prepareWorkspace, runCommand, sleep,
 } from './lib.mjs';
 
 const vscodePath = process.env.VSCODE_PATH || '/Applications/Visual Studio Code.app/Contents/MacOS/Code';
@@ -119,6 +119,30 @@ try {
   t.ok('theme and layout settings apply', appearance.theme === 'cards' && appearance.layout === 'org-chart', JSON.stringify(appearance));
   writeFileSync(settingsPath, JSON.stringify(settings));
   await sleep(1500);
+
+  // Two previews of the same document stay in step. "Open as markmap" reuses
+  // the existing preview, so split the editor to get a second one.
+  await page.locator('.monaco-editor').first().click();
+  await sleep(800);
+  await runCommand(page, 'Open as markmap');
+  await sleep(2500);
+  await runCommand(page, 'Split Editor');
+  await sleep(3000);
+  const mapFrames = [];
+  for (const f of page.frames()) {
+    if (await f.evaluate(() => !!document.querySelector('markmap-view')).catch(() => false)) mapFrames.push(f);
+  }
+  t.ok('a second preview opens', mapFrames.length >= 2, `${mapFrames.length} previews`);
+  if (mapFrames.length >= 2) {
+    const [a, b] = mapFrames;
+    const syncTarget = await findNodeId(a, 'dot.png');
+    await a.evaluate((id) => document.querySelector('markmap-view').mm.setFolded(id, true), syncTarget);
+    await sleep(1200);
+    const mirrored = await b.evaluate((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), syncTarget);
+    t.ok('fold state is mirrored to the other preview', mirrored);
+    await page.keyboard.press('Control+W');
+    await sleep(1200);
+  }
 
   const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()), md: (b) => /^- /m.test(b.toString()) };
   for (const format of ['svg', 'png', 'html', 'md']) {
