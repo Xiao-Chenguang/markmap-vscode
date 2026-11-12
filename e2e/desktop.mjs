@@ -107,10 +107,10 @@ try {
     t.ok('fold state is restored after reopening', restoredFold.includes(foldTarget), `${JSON.stringify(foldedBefore)} -> ${JSON.stringify(restoredFold)}`);
   }
 
-  const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()) };
-  for (const format of ['svg', 'png', 'html']) {
-    const rows = await chooseExport(page, frame, format);
-    if (format === 'svg') t.ok('export picker lists SVG, PNG and HTML', ['SVG', 'PNG', 'HTML'].every((f) => rows.some((x) => x.startsWith(f))), JSON.stringify(rows));
+  const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()), md: (b) => /^- /m.test(b.toString()) };
+  for (const format of ['svg', 'png', 'html', 'md']) {
+    const rows = await chooseExport(page, frame, format, format === 'md' ? 'Markdown' : format);
+    if (format === 'svg') t.ok('export picker lists SVG, PNG, HTML and Markdown', ['SVG', 'PNG', 'HTML', 'Markdown'].every((f) => rows.some((x) => x.startsWith(f))), JSON.stringify(rows));
     const input = page.locator('.quick-input-box input').first();
     const target = join(workspace, `exported.${format}`);
     await input.fill(target);

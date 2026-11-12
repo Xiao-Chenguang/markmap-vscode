@@ -22,6 +22,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Click anywhere on a node to fold it | — | ✅ |
 | Node search / filter | — | ✅ |
 | Fold state remembered per file | — | ✅ |
+| Markdown outline export | — | ✅ |
 | Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
@@ -98,6 +99,10 @@ Press <kbd>/</kbd> to search the map. Matching branches stay open and everything
 ### Fold state
 
 The branches you fold are remembered per file, so reopening a document shows the map the way you left it. Node ids are content hashes, so renaming a heading simply drops that node from the saved state instead of breaking it.
+
+### Export
+
+Use the **Export** button in the toolbar to save the map as SVG, PNG or a standalone HTML page. **Markdown** exports the branches that are currently open as a nested list, which is handy for turning a large document into a summary.
 
 ## Configuration
 

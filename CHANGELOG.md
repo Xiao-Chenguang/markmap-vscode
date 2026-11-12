@@ -18,6 +18,7 @@ Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension 
 - Click anywhere on a node to fold it, not only on its fold anchor (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> toggles the whole subtree)
 - Added node search: matching branches stay open, everything else folds away, and the previous fold state is restored when the search is cleared
 - Remember the folded branches per file, so reopening a document shows the map the way you left it
+- Added a Markdown export that writes the branches currently open as a nested list
 
 ## 0.3.1
 

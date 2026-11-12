@@ -81,7 +81,7 @@ export function findNodeId(frame, text) {
 }
 
 /** Click the toolbar Export button and choose a format in the picker. Returns the picker rows. */
-export async function chooseExport(page, frame, format) {
+export async function chooseExport(page, frame, format, search = format) {
   await frame.evaluate(() =>
     [...document.querySelector('markmap-view').shadowRoot.querySelectorAll('.markmap-toolbar button')]
       .find((b) => b.title === 'Export')
@@ -89,7 +89,7 @@ export async function chooseExport(page, frame, format) {
   );
   await sleep(1000);
   const rows = await page.locator('.quick-input-list .monaco-list-row').allInnerTexts();
-  await page.keyboard.type(format);
+  await page.keyboard.type(search);
   await sleep(400);
   await page.keyboard.press('Enter');
   await sleep(1200);

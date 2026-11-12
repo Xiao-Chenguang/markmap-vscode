@@ -27,6 +27,11 @@ const EXPORT_FORMATS = [
     format: 'html',
     detail: 'Interactive page that works offline',
   },
+  {
+    label: 'Markdown',
+    format: 'md',
+    detail: 'Outline of the branches that are open',
+  },
 ] as const;
 
 const encoder = new TextEncoder();
@@ -50,7 +55,12 @@ function defaultExportUri(document: TextDocument, format: string) {
   if (document.isUntitled) return undefined;
   const ext = Utils.extname(document.uri);
   const name = Utils.basename(document.uri).slice(0, -ext.length || undefined);
-  return Utils.joinPath(Utils.dirname(document.uri), `${name}.${format}`);
+  // A Markdown export is an outline, so it must not default to the source file.
+  const suffix = format === 'md' ? '.outline' : '';
+  return Utils.joinPath(
+    Utils.dirname(document.uri),
+    `${name}${suffix}.${format}`,
+  );
 }
 
 function readDefaultOptions() {
@@ -138,6 +148,7 @@ export class MarkmapEditor implements CustomTextEditorProvider {
 
     const post = (message: HostMessage) => webview.postMessage(message);
     let pendingImageUri: Uri | undefined;
+    let pendingOutlineUri: Uri | undefined;
     /** Fold state is only restored on the first load of this panel. */
     let restoredFold = false;
 
@@ -221,6 +232,9 @@ export class MarkmapEditor implements CustomTextEditorProvider {
         if (!targetUri) return;
         if (format === 'html') {
           await writeFile(targetUri, await this.createHtml(document, title));
+        } else if (format === 'md') {
+          pendingOutlineUri = targetUri;
+          post({ type: 'exportOutline' });
         } else {
           pendingImageUri = targetUri;
           post({ type: 'exportImage', data: format });
@@ -242,6 +256,11 @@ export class MarkmapEditor implements CustomTextEditorProvider {
       },
       foldChanged(ids) {
         saveFoldedIds(ids);
+      },
+      async outline(markdown) {
+        const targetUri = pendingOutlineUri;
+        pendingOutlineUri = undefined;
+        if (targetUri) await writeFile(targetUri, markdown);
       },
       async setFocus(offset) {
         const viewColumn = vscodeWindow.tabGroups.all

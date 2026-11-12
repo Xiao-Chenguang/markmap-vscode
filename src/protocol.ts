@@ -20,7 +20,9 @@ export type HostMessage =
   | { type: 'setCursor'; data: number }
   | { type: 'setCSS'; data: string }
   | { type: 'toggleNode'; data: boolean }
-  | { type: 'exportImage'; data: ImageFormat };
+  | { type: 'exportImage'; data: ImageFormat }
+  /** Ask for the visible tree as a nested Markdown list. */
+  | { type: 'exportOutline' };
 
 /** Messages from the webview to the extension host. */
 export type WebviewMessage =
@@ -34,4 +36,6 @@ export type WebviewMessage =
   | { type: 'openFile'; data: string }
   | { type: 'setFocus'; data: number }
   /** The set of folded node ids changed, for restoring it next time. */
-  | { type: 'foldChanged'; data: string[] };
+  | { type: 'foldChanged'; data: string[] }
+  /** The visible tree as a nested Markdown list, for the outline export. */
+  | { type: 'outline'; data: string };

@@ -109,6 +109,9 @@ const handlers: {
     else if (mm.foldedIds.has(active.id)) mm.expandAll(active.id);
     else mm.foldAll(active.id);
   },
+  exportOutline() {
+    post({ type: 'outline', data: buildOutline() });
+  },
   exportImage,
 };
 
@@ -296,6 +299,24 @@ function toggleHelp() {
 
 function hideHelp() {
   helpEl?.remove();
+}
+
+/**
+ * The tree as a nested Markdown list, skipping folded branches so the outline
+ * matches what is on screen.
+ */
+function buildOutline() {
+  const mm = view.mm;
+  if (!mm?.tree) return '';
+  const lines: string[] = [];
+  const visit = (node: MarkmapNode, depth: number) => {
+    const text = toPlainText(node.content).trim();
+    if (text) lines.push(`${'  '.repeat(depth)}- ${text}`);
+    if (mm.foldedIds.has(node.id)) return;
+    node.children.forEach((child) => visit(child, depth + 1));
+  };
+  visit(mm.tree, 0);
+  return lines.length ? `${lines.join('\n')}\n` : '';
 }
 
 /** Fold state saved when a search starts, restored when it is cleared. */
