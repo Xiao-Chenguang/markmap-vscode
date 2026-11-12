@@ -84,7 +84,12 @@ const handlers: {
     if (!placed) {
       placed = true;
       // Images and math change the drawing's size once they are ready.
-      view.mm?.result?.pending?.then(() => view.mm?.fit());
+      view.mm?.result?.pending?.then(() => {
+        if (data.foldedIds?.length) {
+          view.mm?.setFoldedIds(data.foldedIds, { animate: false });
+        }
+        view.mm?.fit();
+      });
     }
   },
   setCursor(offset) {
@@ -110,6 +115,12 @@ const handlers: {
 window.addEventListener('message', (event: MessageEvent<HostMessage>) => {
   const { type, data } = event.data;
   (handlers[type] as (value: typeof data) => void)?.(data);
+});
+
+// Report fold changes so the host can restore them the next time the file opens.
+view.addEventListener('fold', () => {
+  const mm = view.mm;
+  if (mm) post({ type: 'foldChanged', data: [...mm.foldedIds] });
 });
 
 post({ type: 'ready' });

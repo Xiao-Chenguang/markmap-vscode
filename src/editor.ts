@@ -64,6 +64,17 @@ function readDefaultOptions() {
   }
 }
 
+/**
+ * Folded node ids per document, kept in the extension's workspace state so a
+ * file reopens the way the user left it. Node ids are content hashes, so a
+ * changed heading simply drops out of the set.
+ */
+const FOLD_STATE_KEY = 'markmapPlus.foldedIds';
+
+function foldStateKey(document: TextDocument) {
+  return document.uri.toString();
+}
+
 export class MarkmapEditor implements CustomTextEditorProvider {
   private webviewPanelMap = new Map<TextDocument, WebviewPanel>();
 
@@ -127,6 +138,26 @@ export class MarkmapEditor implements CustomTextEditorProvider {
 
     const post = (message: HostMessage) => webview.postMessage(message);
     let pendingImageUri: Uri | undefined;
+    /** Fold state is only restored on the first load of this panel. */
+    let restoredFold = false;
+
+    const readFoldedIds = () => {
+      const all =
+        this.context.workspaceState.get<Record<string, string[]>>(
+          FOLD_STATE_KEY,
+        );
+      return all?.[foldStateKey(document)];
+    };
+    const saveFoldedIds = (ids: string[]) => {
+      const all = {
+        ...this.context.workspaceState.get<Record<string, string[]>>(
+          FOLD_STATE_KEY,
+        ),
+      };
+      if (ids.length) all[foldStateKey(document)] = ids;
+      else delete all[foldStateKey(document)];
+      void this.context.workspaceState.update(FOLD_STATE_KEY, all);
+    };
 
     const updateCursor = () => {
       const editor = vscodeWindow.activeTextEditor;
@@ -150,8 +181,10 @@ export class MarkmapEditor implements CustomTextEditorProvider {
           markdown: document.getText(),
           defaultOptions: readDefaultOptions(),
           baseUri: webview.asWebviewUri(documentDir).toString(),
+          foldedIds: restoredFold ? undefined : readFoldedIds(),
         },
       });
+      restoredFold = true;
       updateCursor();
     };
     const debouncedUpdateCursor = debounce(updateCursor, 200);
@@ -206,6 +239,9 @@ export class MarkmapEditor implements CustomTextEditorProvider {
           'vscode.open',
           Utils.joinPath(documentDir, relPath),
         );
+      },
+      foldChanged(ids) {
+        saveFoldedIds(ids);
       },
       async setFocus(offset) {
         const viewColumn = vscodeWindow.tabGroups.all

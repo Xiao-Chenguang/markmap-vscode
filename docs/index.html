@@ -189,6 +189,11 @@
           <td>✅</td>
         </tr>
         <tr>
+          <td>Fold state remembered per file</td>
+          <td>—</td>
+          <td>✅</td>
+        </tr>
+        <tr>
           <td>Everything else</td>
           <td>✅</td>
           <td>✅ inherited</td>
@@ -243,6 +248,13 @@
         <code>Enter</code> jumps to the next match, <code>Shift</code>+<code>Enter</code> to the
         previous one, and <code>Esc</code> clears the search and restores the fold state you had
         before.
+      </p>
+
+      <h2>Fold state</h2>
+      <p>
+        The branches you fold are remembered per file, so reopening a document shows the map the
+        way you left it. Node ids are content hashes, so renaming a heading simply drops that node
+        from the saved state instead of breaking it.
       </p>
 
       <h2>Configuration</h2>

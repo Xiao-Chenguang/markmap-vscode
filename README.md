@@ -21,6 +21,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Keyboard shortcuts in the preview | — | ✅ |
 | Click anywhere on a node to fold it | — | ✅ |
 | Node search / filter | — | ✅ |
+| Fold state remembered per file | — | ✅ |
 | Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
@@ -93,6 +94,10 @@ Clicking anywhere on a node folds or unfolds it, not only on its fold anchor. Ho
 ### Search
 
 Press <kbd>/</kbd> to search the map. Matching branches stay open and everything else folds away, so a large document collapses to just the parts that match. <kbd>Enter</kbd> jumps to the next match, <kbd>Shift</kbd>+<kbd>Enter</kbd> to the previous one, and <kbd>Esc</kbd> clears the search and restores the fold state you had before.
+
+### Fold state
+
+The branches you fold are remembered per file, so reopening a document shows the map the way you left it. Node ids are content hashes, so renaming a heading simply drops that node from the saved state instead of breaking it.
 
 ## Configuration
 

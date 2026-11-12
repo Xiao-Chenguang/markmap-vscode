@@ -93,6 +93,20 @@ try {
   }));
   t.ok('Esc closes the search and restores the fold state', restored.hidden && restored.folded === before, `${restored.folded} vs ${before}`);
 
+  // Fold state survives closing and reopening the preview.
+  const foldTarget = await findNodeId(frame, 'dot.png');
+  await v((id) => document.querySelector('markmap-view').mm.setFolded(id, true), foldTarget);
+  await sleep(800);
+  const foldedBefore = await v(() => [...document.querySelector('markmap-view').mm.foldedIds]);
+  await page.keyboard.press('Control+W');
+  await sleep(1500);
+  const reopened = await openSampleAsMarkmap(page);
+  t.ok('preview reopens', !!reopened);
+  if (reopened) {
+    const restoredFold = await reopened.evaluate(() => [...document.querySelector('markmap-view').mm.foldedIds]);
+    t.ok('fold state is restored after reopening', restoredFold.includes(foldTarget), `${JSON.stringify(foldedBefore)} -> ${JSON.stringify(restoredFold)}`);
+  }
+
   const signatures = { svg: (b) => /<svg/.test(b.subarray(0, 400).toString()), png: (b) => b.subarray(1, 4).toString() === 'PNG', html: (b) => /<html|<!doctype/i.test(b.subarray(0, 400).toString()) };
   for (const format of ['svg', 'png', 'html']) {
     const rows = await chooseExport(page, frame, format);
