@@ -65,3 +65,16 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
 
+  publish-open-vsx:
+    name: Publish to Open VSX
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: markmap-plus-vsix
+      - name: Publish to Open VSX
+        run: npx --yes ovsx@1.3.0 publish --packagePath markmap-plus-*.vsix
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
+

@@ -6,17 +6,16 @@
 
 > **Markmap Plus is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald ([@gera2ld](https://github.com/gera2ld)).**
 > It is **not** affiliated with or endorsed by the original author. The original project is MIT licensed, and so is this fork.
-> The fork exists because the upstream project is no longer actively maintained; it keeps the upstream feature set and adds improvements on top.
+> The fork builds on the upstream feature set and adds improvements of its own.
 
 This extension integrates [markmap](https://markmap.js.org/) into VS Code: preview your markdown as an interactive mind map.
 
 ## Why a fork?
 
-The upstream `markmap-vscode` has not been updated for a long time and pull requests are not being merged. Markmap Plus is published under its own extension ID so it can be iterated on independently, while staying compatible with the upstream feature set.
+Markmap Plus is published under its own extension ID so it can be developed independently. It builds on the original extension and adds the features below.
 
 | | markmap-vscode (upstream) | Markmap Plus (this fork) |
 | --- | --- | --- |
-| Maintenance | Inactive | Actively maintained |
 | Extension ID | `gera2ld.markmap-vscode` | `cgxiao.markmap-plus` |
 | Settings prefix | `markmap.*` | `markmapPlus.*` |
 | Keyboard shortcuts in the preview | — | ✅ |
@@ -26,11 +25,10 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | Markdown outline export | — | ✅ |
 | Theme and layout settings | frontmatter only | ✅ settings too |
 | Multiple previews stay in sync | — | ✅ |
-| Everything else | ✅ | ✅ (inherited) |
 
 ## Migrating from markmap-vscode
 
-1. Uninstall (or disable) the original `markmap-vscode` extension. Both extensions register a markdown custom editor, so keeping both installed leads to unpredictable behaviour.
+1. Optionally disable the original `markmap-vscode` extension to avoid duplicate commands and editor choices. The two extensions use separate IDs and settings.
 2. Install **Markmap Plus**.
 3. Copy your settings over — the keys were renamed to avoid clashing with the original extension:
 
@@ -55,14 +53,14 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 - Preview markdown files as markmap
 - Edit markdown files in a text editor and the markmap will update on the fly
 - Themes and layouts, set in frontmatter
-- Export as HTML, SVG or PNG
-- Works offline
+- Export as HTML, SVG, PNG or a Markdown outline
+- Preview without a network connection (remote images and links still require access to their sources)
 
 ## Usage
 
 ### Command Palette
 
-Open a markdown file. Then open the Command Palette (⇧⌘P) and search `Open as markmap`, press enter.
+Open a markdown file. Then open the Command Palette (⇧⌘P on macOS, Ctrl+Shift+P on Windows/Linux), search for `Markmap Plus: Open as markmap`, and press Enter.
 
 ### Context menu
 
@@ -95,23 +93,23 @@ When the Markdown editor is active, the Command Palette offers **Markmap Plus: T
 
 ### Search
 
-Press <kbd>/</kbd> to search the map. Matching branches stay open and everything else folds away, so a large document collapses to just the parts that match. <kbd>Enter</kbd> jumps to the next match, <kbd>Shift</kbd>+<kbd>Enter</kbd> to the previous one, and <kbd>Esc</kbd> clears the search and restores the fold state you had before.
+Press <kbd>/</kbd> to search the map. Paths to matching nodes stay open and other branches fold. If there are no matches, the previous fold state remains visible. <kbd>Enter</kbd> jumps to the next match, <kbd>Shift</kbd>+<kbd>Enter</kbd> to the previous one, and <kbd>Esc</kbd> clears the search and restores the fold state you had before.
 
 ### Fold state
 
-The branches you fold are remembered per file, so reopening a document shows the map the way you left it. Node ids are content hashes, so renaming a heading simply drops that node from the saved state instead of breaking it.
+The branches you fold are remembered per file in the current VS Code workspace. Reopening a document in that workspace restores its saved fold state. Editing node content can change its identity and prevent that node's saved state from being restored.
 
 If you open the same document in more than one preview, folding a branch in one updates the others.
 
 ### Export
 
-Use the **Export** button in the toolbar to save the map as SVG, PNG or a standalone HTML page. **Markdown** exports the branches that are currently open as a nested list, which is handy for turning a large document into a summary.
+Use the **Export** button in the toolbar to save the map as SVG, PNG or an HTML page. The HTML includes the viewer, but does not embed local images or apply the extension's settings; document frontmatter still applies. Remote resources require a network connection. **Markdown** exports the branches that are currently open as a nested list.
 
 ## Configuration
 
 ### Custom CSS
 
-Extra CSS for the page around the map. To change colors, set `--mm-*` properties on `markmap-view`. See [Themes and layouts](https://markmap.js.org/docs/guide/themes-and-layouts) for the list.
+`markmapPlus.customCSS` adds CSS to the preview page around the map. To change colors, set `--mm-*` properties on `markmap-view`; rules cannot reach inside the map. It does not apply to exported HTML. See [Themes and layouts](https://markmap.js.org/docs/guide/themes-and-layouts) for the list.
 
 ```css
 markmap-view {
@@ -121,7 +119,7 @@ markmap-view {
 
 ### Default Options
 
-Default options for Markmap as JSON, see [Options](https://markmap.js.org/docs/guide/options). Options in the frontmatter of a document win over these.
+`markmapPlus.defaultOptions` sets default Markmap options as a JSON string; see [Options](https://markmap.js.org/docs/guide/options). Options in a document's frontmatter take precedence. These defaults do not apply to exported HTML.
 
 ### Theme and Layout
 
@@ -132,7 +130,7 @@ Default options for Markmap as JSON, see [Options](https://markmap.js.org/docs/g
 | `markmapPlus.theme` | `classic`, `cards`, `minimal` |
 | `markmapPlus.layout` | `tree`, `two-sided`, `org-chart` |
 
-Leave either empty to use the document's frontmatter, or the default.
+Leave either empty to use the document's frontmatter, or the default. If you clear a previously selected theme or layout, reopen the preview to restore the document's value.
 
 ## Credits
 

@@ -146,8 +146,7 @@
       <div class="note">
         Markmap Plus is an independent fork of
         <a href="https://github.com/markmap/markmap-vscode">markmap-vscode</a> by Gerald, MIT licensed.
-        It is not affiliated with or endorsed by the original author. The fork exists because the
-        upstream project is no longer actively maintained.
+        It is not affiliated with or endorsed by the original author.
       </div>
 
       <h2>Why a fork?</h2>
@@ -156,11 +155,6 @@
           <th></th>
           <th>markmap-vscode (upstream)</th>
           <th>Markmap Plus</th>
-        </tr>
-        <tr>
-          <td>Maintenance</td>
-          <td>Inactive</td>
-          <td>Actively maintained</td>
         </tr>
         <tr>
           <td>Extension ID</td>
@@ -207,18 +201,13 @@
           <td>—</td>
           <td>✅</td>
         </tr>
-        <tr>
-          <td>Everything else</td>
-          <td>✅</td>
-          <td>✅ inherited</td>
-        </tr>
       </table>
 
       <h2>Migrating from markmap-vscode</h2>
       <ol>
         <li>
-          Uninstall or disable the original <code>markmap-vscode</code>. Both register a markdown
-          custom editor, so keeping both installed leads to unpredictable behaviour.
+          Optionally disable the original <code>markmap-vscode</code> to avoid duplicate commands
+          and editor choices. The extensions use separate IDs and settings.
         </li>
         <li>Install Markmap Plus.</li>
         <li>
@@ -240,6 +229,12 @@
         </li>
       </ol>
 
+      <h2>Getting started</h2>
+      <p>Open a Markdown file and run <strong>Markmap Plus: Open as markmap</strong> from the
+        Command Palette. You can also use the editor title-bar button or the file context menu.
+        See the <a href="https://github.com/Xiao-Chenguang/markmap-vscode#readme">full README</a>
+        for usage and configuration.</p>
+
       <h2>Keyboard shortcuts</h2>
       <p>Available while the preview has focus. Press <kbd>?</kbd> in the preview to see them.</p>
       <table>
@@ -259,8 +254,8 @@
 
       <h2>Search</h2>
       <p>
-        Press <code>/</code> to search the map. Matching branches stay open and everything else
-        folds away, so a large document collapses to just the parts that match.
+        Press <code>/</code> to search the map. Paths to matches stay open and other branches fold.
+        If there are no matches, the previous fold state remains visible.
         <code>Enter</code> jumps to the next match, <code>Shift</code>+<code>Enter</code> to the
         previous one, and <code>Esc</code> clears the search and restores the fold state you had
         before.
@@ -268,16 +263,17 @@
 
       <h2>Fold state</h2>
       <p>
-        The branches you fold are remembered per file, so reopening a document shows the map the
-        way you left it. Node ids are content hashes, so renaming a heading simply drops that node
-        from the saved state instead of breaking it.
+        Fold state is remembered per file in the current VS Code workspace. Editing node content
+        can change its identity and prevent that node's saved state from being restored. Open
+        previews of the same document synchronize folding.
       </p>
 
       <h2>Export</h2>
       <p>
         Use the <strong>Export</strong> button in the toolbar to save the map as SVG, PNG or a
-        standalone HTML page. <strong>Markdown</strong> exports the branches that are currently open
-        as a nested list, which is handy for turning a large document into a summary.
+        HTML page. HTML includes the viewer but does not embed local images or apply extension
+        settings; document frontmatter still applies. Remote resources require network access.
+        <strong>Markdown</strong> exports the branches that are currently open as a nested list.
       </p>
 
       <h2>Configuration</h2>
@@ -291,7 +287,9 @@
         <code>markmapPlus.theme</code> takes <code>classic</code>, <code>cards</code> or
         <code>minimal</code>; <code>markmapPlus.layout</code> takes <code>tree</code>,
         <code>two-sided</code> or <code>org-chart</code>. Leave either empty to use the document's
-        frontmatter, or the default.
+        frontmatter, or the default. After clearing a previously selected theme or layout, reopen
+        the preview to restore the document's value. Default options and custom CSS do not apply
+        to exported HTML; custom CSS cannot reach inside the map.
       </p>
 
       <footer>
