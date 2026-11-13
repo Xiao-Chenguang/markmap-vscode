@@ -4,6 +4,10 @@
 > Entries below `0.4.0` are inherited from the upstream project and are kept for history.
 > From `0.4.0` on, versions are released independently by this fork.
 
+## 0.4.1
+
+- Correct project links and issue templates; remove the unavailable Open VSX installation link and inherited screenshots.
+
 ## 0.4.0
 
 Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension ID.

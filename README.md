@@ -1,7 +1,8 @@
 # Markmap Plus
 
 [![vscode](https://img.shields.io/visual-studio-marketplace/v/cgxiao.markmap-plus)](https://marketplace.visualstudio.com/items?itemName=cgxiao.markmap-plus)
-[![open vsx](https://img.shields.io/open-vsx/v/cgxiao/markmap-plus)](https://open-vsx.org/extension/cgxiao/markmap-plus)
+
+[Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=cgxiao.markmap-plus) · [Project website](https://xiao-chenguang.github.io/markmap-vscode/) · [Source and issues](https://github.com/Xiao-Chenguang/markmap-vscode)
 
 > **Markmap Plus is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald ([@gera2ld](https://github.com/gera2ld)).**
 > It is **not** affiliated with or endorsed by the original author. The original project is MIT licensed, and so is this fork.
@@ -57,8 +58,6 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 - Export as HTML, SVG or PNG
 - Works offline
 
-<img width="1014" alt="markmap" src="https://user-images.githubusercontent.com/3139113/97068999-5f9e8480-15ff-11eb-8222-43d26cecade5.png">
-
 ## Usage
 
 ### Command Palette
@@ -72,8 +71,6 @@ Right click on a markdown file, then choose `Open as markmap`.
 ### Button on title-bar
 
 Open a markdown file. Find the markmap icon on the editor title-bar and click it.
-
-![title button](https://user-images.githubusercontent.com/3139113/110966366-25f0cf00-8390-11eb-9a16-3c4d66712f47.png)
 
 ### Keyboard shortcuts
 

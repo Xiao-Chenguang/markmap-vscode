@@ -7,7 +7,7 @@ assignees: ''
 ---
 
 - [ ] I have searched for existing issues that already requested this feature and found none
-- [ ] This is not something the upstream [markmap-vscode](https://github.com/markmap/markmap-vscode) already does
+- [ ] I have checked whether Markmap Plus already supports this feature
 
 **What problem does this solve?**
 

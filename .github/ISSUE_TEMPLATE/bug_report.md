@@ -7,9 +7,8 @@ assignees: ''
 ---
 
 - [ ] I have searched for existing issues that already reported this problem and found none
-- [ ] The bug is in this fork, not in the upstream [markmap-vscode](https://github.com/markmap/markmap-vscode)
-  <!-- Note: for bugs in the REPL, please report to https://github.com/markmap/markmap -->
-- [ ] The bug is also present in [the web version of VSCode](https://vscode.dev) or GitHub Codespaces
+- [ ] I can reproduce the problem in Markmap Plus
+- [ ] I have checked whether the problem also occurs in [VS Code for the Web](https://vscode.dev) or GitHub Codespaces
 
 **Describe the bug**
 

@@ -1,6 +1,6 @@
 {
   "name": "markmap-plus",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Markmap mindmap preview for VS Code — an actively maintained fork of markmap-vscode with keyboard shortcuts, node search and more",
   "author": "Xiao-Chenguang",
   "contributors": [
