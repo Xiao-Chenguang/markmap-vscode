@@ -87,7 +87,11 @@ When the markmap preview is focused, the following single-key shortcuts are avai
 | `?` | Show/hide the shortcut help |
 | `Esc` | Close the shortcut help |
 
-Left-click a branch node to fold or unfold its immediate children. Right-click it to fold or unfold the entire subtree. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+click also toggles the whole subtree. Links and areas outside branch nodes keep their context menus.
+### Folding nodes
+
+In the preview, left-click a branch node to fold or unfold its immediate children. Right-click it to fold or unfold the entire subtree. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+click also toggles the whole subtree. Links and areas outside branch nodes keep their context menus.
+
+When the Markdown editor is active, the Command Palette offers **Markmap Plus: Toggle the active node** and **Markmap Plus: Toggle the active node recursively** for the node at the text cursor. These commands have no default keybindings, so typing `t` or `r` in Markdown works normally. You can assign your own keybindings in VS Code if you want them.
 
 ### Search
 
