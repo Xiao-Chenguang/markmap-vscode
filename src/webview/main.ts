@@ -71,6 +71,7 @@ new ResizeObserver(() => {
 
 document.addEventListener('click', handleLinkClick);
 document.addEventListener('click', handleNodeClick);
+document.addEventListener('contextmenu', handleNodeContextMenu);
 document.addEventListener('keydown', handleKeyDown);
 
 const handlers: {
@@ -231,6 +232,25 @@ function handleNodeClick(event: MouseEvent) {
   toggleNode(mm, target.nodeId, event.ctrlKey || event.metaKey);
 }
 
+/** Right-click a branch to toggle the entire subtree; leave other menus alone. */
+function handleNodeContextMenu(event: MouseEvent) {
+  if (
+    event.defaultPrevented ||
+    event
+      .composedPath()
+      .some((target) => target instanceof Element && target.localName === 'a')
+  )
+    return;
+  const mm = view.mm;
+  if (!mm) return;
+  const target = mm.hitAt(...mm.layoutPoint(event.clientX, event.clientY));
+  if (target?.kind !== 'node' && target?.kind !== 'toggle') return;
+  const node = mm.tree && findNode(mm.tree, target.nodeId);
+  if (!node?.children.length) return;
+  event.preventDefault();
+  toggleNode(mm, node.id, true);
+}
+
 function toggleNode(mm: Markmap, id: string, recursive: boolean) {
   if (!recursive) mm.toggle(id);
   else if (mm.foldedIds.has(id)) mm.expandAll(id);
@@ -245,12 +265,6 @@ const keyHandlers: Record<string, () => void> = {
   '+': () => view.mm?.zoomIn(),
   '=': () => view.mm?.zoomIn(),
   '-': () => view.mm?.zoomOut(),
-  t: () => {
-    if (view.mm && active) toggleNode(view.mm, active.id, false);
-  },
-  r: () => {
-    if (view.mm && active) toggleNode(view.mm, active.id, true);
-  },
   '/': () => openSearch(),
   '?': () => toggleHelp(),
 };
@@ -275,8 +289,6 @@ const SHORTCUTS: [string[], string][] = [
   [['C'], 'Collapse all'],
   [['+', '='], 'Zoom in'],
   [['-'], 'Zoom out'],
-  [['T'], 'Toggle the node under the cursor'],
-  [['R'], 'Toggle the node under the cursor recursively'],
   [['/'], 'Search nodes'],
   [['?'], 'Show/hide this help'],
 ];

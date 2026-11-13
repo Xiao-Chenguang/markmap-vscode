@@ -66,6 +66,46 @@ try {
   t.ok('code block in a note is highlighted (lazy chunk loads)', await v(() => !!document.querySelector('.markmap-popover .hljs-keyword')));
   await v(() => document.querySelector('markmap-view').mm.closeNotes());
 
+  // Exercise the actual pointer gestures in the preview.
+  await v(() => { const mm = document.querySelector('markmap-view').mm; mm.expandAll(); mm.fit(); });
+  await sleep(700);
+  const childId = await findNodeId(frame, 'item');
+  const frameBox = await frame.frameElement().then((e) => e.boundingBox());
+  const nodeRect = await v((id) => document.querySelector('markmap-view').mm.screenRect(id), firstId);
+  const x = frameBox.x + nodeRect.x + nodeRect.width / 2;
+  const y = frameBox.y + nodeRect.y + nodeRect.height / 2;
+  await page.mouse.click(x, y);
+  await sleep(500);
+  t.ok('left click folds the branch', await v((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), firstId));
+  await page.mouse.click(x, y);
+  await sleep(500);
+  t.ok('left click unfolds the branch', !(await v((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), firstId)));
+  await page.mouse.click(x, y, { button: 'right' });
+  await sleep(500);
+  const recursivelyFolded = await v(([parent, child]) => {
+    const ids = document.querySelector('markmap-view').mm.foldedIds;
+    return ids.has(parent) && ids.has(child);
+  }, [firstId, childId]);
+  t.ok('right click folds the subtree recursively', recursivelyFolded);
+  await page.mouse.click(x, y, { button: 'right' });
+  await sleep(500);
+  const recursivelyExpanded = await v(([parent, child]) => {
+    const ids = document.querySelector('markmap-view').mm.foldedIds;
+    return !ids.has(parent) && !ids.has(child);
+  }, [firstId, childId]);
+  t.ok('right click unfolds the subtree recursively', recursivelyExpanded);
+  const otherMenus = await v(() => {
+    const mm = document.querySelector('markmap-view').mm;
+    const before = JSON.stringify([...mm.foldedIds]);
+    const link = document.querySelector('markmap-view').shadowRoot.querySelector('svg a');
+    const box = link.getBoundingClientRect();
+    const event = (x, y) => new MouseEvent('contextmenu', { bubbles: true, composed: true, cancelable: true, clientX: x, clientY: y, button: 2 });
+    link.dispatchEvent(event(box.x + box.width / 2, box.y + box.height / 2));
+    document.body.dispatchEvent(event(-100, -100));
+    return before === JSON.stringify([...mm.foldedIds]);
+  });
+  t.ok('right click on a link or outside does not fold a node', otherMenus);
+
   // Search: matching branches stay open, the rest folds away, Esc restores.
   await v(() => document.querySelector('markmap-view').mm.expandAll());
   await sleep(400);

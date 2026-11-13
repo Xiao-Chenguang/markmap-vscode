@@ -81,6 +81,34 @@ try {
 
   // cursor into a folded branch unfolds it
   const firstId = await findNodeId(frame, 'First');
+  const itemId = await findNodeId(frame, 'item');
+  // Left-click toggles one branch; right-click toggles its whole subtree.
+  await v(() => document.querySelector('markmap-view').mm.fit());
+  await sleep(600);
+  await frame.locator('body').click({ position: { x: 10, y: 200 } });
+  const hoverBox = await frame.frameElement().then((e) => e.boundingBox());
+  const hoverRect = await v((id) => document.querySelector('markmap-view').mm.screenRect(id), firstId);
+  const nodeX = hoverBox.x + hoverRect.x + hoverRect.width / 2;
+  const nodeY = hoverBox.y + hoverRect.y + hoverRect.height / 2;
+  await page.mouse.click(nodeX, nodeY);
+  await sleep(500);
+  t.ok('left click folds the branch', await v((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), firstId));
+  await page.mouse.click(nodeX, nodeY);
+  await sleep(500);
+  t.ok('left click unfolds the branch', !(await v((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), firstId)));
+  await page.mouse.click(nodeX, nodeY, { button: 'right' });
+  await sleep(500);
+  const recursivelyFolded = await v(([parent, child]) => {
+    const ids = document.querySelector('markmap-view').mm.foldedIds;
+    return ids.has(parent) && ids.has(child);
+  }, [firstId, itemId]);
+  t.ok('right click folds the subtree recursively', recursivelyFolded);
+  await page.mouse.click(nodeX, nodeY, { button: 'right' });
+  await sleep(500);
+  t.ok('right click unfolds the subtree recursively', !(await v((id) => document.querySelector('markmap-view').mm.foldedIds.has(id), itemId)));
+  await v(() => document.querySelector('markmap-view').mm.expandAll());
+  await sleep(500);
+
   await v((id) => document.querySelector('markmap-view').mm.setFolded(id, true), firstId);
   await sleep(700);
   await goLine(14);

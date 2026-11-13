@@ -83,13 +83,11 @@ When the markmap preview is focused, the following single-key shortcuts are avai
 | `C` | Collapse all nodes (keep the first level) |
 | `+` / `=` | Zoom in |
 | `-` | Zoom out |
-| `T` | Toggle the node under the cursor |
-| `R` | Toggle the node under the cursor recursively |
 | `/` | Search nodes |
 | `?` | Show/hide the shortcut help |
 | `Esc` | Close the shortcut help |
 
-Clicking anywhere on a node folds or unfolds it, not only on its fold anchor. Hold <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> to toggle the whole subtree.
+Left-click a branch node to fold or unfold its immediate children. Right-click it to fold or unfold the entire subtree. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+click also toggles the whole subtree. Links and areas outside branch nodes keep their context menus.
 
 ### Search
 
