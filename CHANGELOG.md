@@ -8,7 +8,7 @@
 
 Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension ID.
 
-- Renamed the extension to **Markmap Plus** (`xiaochenguang.markmap-plus`)
+- Renamed the extension to **Markmap Plus** (`cgxiao.markmap-plus`)
 - Renamed the command prefix from `markmap-vscode.*` to `markmap-plus.*`
 - Renamed the custom editor view type from `markmap-vscode.markmap` to `markmap-plus.markmap`
 - Renamed the settings from `markmap.*` to `markmapPlus.*` so both extensions can coexist in a settings file without clashing

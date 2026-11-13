@@ -1,7 +1,7 @@
 # Markmap Plus
 
-[![vscode](https://img.shields.io/visual-studio-marketplace/v/xiaochenguang.markmap-plus)](https://marketplace.visualstudio.com/items?itemName=xiaochenguang.markmap-plus)
-[![open vsx](https://img.shields.io/open-vsx/v/xiaochenguang/markmap-plus)](https://open-vsx.org/extension/xiaochenguang/markmap-plus)
+[![vscode](https://img.shields.io/visual-studio-marketplace/v/cgxiao.markmap-plus)](https://marketplace.visualstudio.com/items?itemName=cgxiao.markmap-plus)
+[![open vsx](https://img.shields.io/open-vsx/v/cgxiao/markmap-plus)](https://open-vsx.org/extension/cgxiao/markmap-plus)
 
 > **Markmap Plus is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald ([@gera2ld](https://github.com/gera2ld)).**
 > It is **not** affiliated with or endorsed by the original author. The original project is MIT licensed, and so is this fork.
@@ -16,7 +16,7 @@ The upstream `markmap-vscode` has not been updated for a long time and pull requ
 | | markmap-vscode (upstream) | Markmap Plus (this fork) |
 | --- | --- | --- |
 | Maintenance | Inactive | Actively maintained |
-| Extension ID | `gera2ld.markmap-vscode` | `xiaochenguang.markmap-plus` |
+| Extension ID | `gera2ld.markmap-vscode` | `cgxiao.markmap-plus` |
 | Settings prefix | `markmap.*` | `markmapPlus.*` |
 | Keyboard shortcuts in the preview | — | ✅ |
 | Click anywhere on a node to fold it | — | ✅ |
