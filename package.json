@@ -152,11 +152,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Xiao-Chenguang/markmap-plus"
+    "url": "https://github.com/Xiao-Chenguang/markmap-vscode"
   },
-  "homepage": "https://github.com/Xiao-Chenguang/markmap-plus#readme",
+  "homepage": "https://github.com/Xiao-Chenguang/markmap-vscode#readme",
   "bugs": {
-    "url": "https://github.com/Xiao-Chenguang/markmap-plus/issues"
+    "url": "https://github.com/Xiao-Chenguang/markmap-vscode/issues"
   },
   "main": "dist/extension.js",
   "browser": "dist/extension.js",

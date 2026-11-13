@@ -33,7 +33,7 @@ pnpm test:e2e:web       # downloads VS Code for the Web on first run
 
 1. Bump `version` in `package.json` and add the matching `CHANGELOG.md` entry.
 2. Commit, then tag: `jj bookmark set main -r @- && jj git push --bookmark main` and push a `v<version>` tag.
-3. The `Release` workflow packages the `.vsix`, creates a GitHub release, and publishes to both the VS Code Marketplace and Open VSX.
+3. The `Release` workflow packages the `.vsix`, creates a GitHub release, and publishes to the VS Code Marketplace using the `VSCE_TOKEN` repository secret.
 
 The tag must match `package.json`; the workflow fails otherwise.
 
