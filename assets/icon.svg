@@ -1,37 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4f46e5"/>
-      <stop offset="1" stop-color="#0ea5e9"/>
+    <clipPath id="squircle-clip">
+      <rect x="8" y="8" width="240" height="240" rx="54"/>
+    </clipPath>
+
+    <clipPath id="card-clip">
+      <rect x="48" y="48" width="96" height="160" rx="22"/>
+    </clipPath>
+
+    <!-- Squircle background gradients -->
+    <linearGradient id="bg-grad" x1="16" y1="12" x2="240" y2="244" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="52%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#2B2182"/>
     </linearGradient>
-    <linearGradient id="badge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fbbf24"/>
-      <stop offset="1" stop-color="#f97316"/>
+
+    <radialGradient id="bg-glow" cx="64" cy="44" r="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#3B82F6" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="squircle-rim" x1="16" y1="12" x2="240" y2="244" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.42"/>
+      <stop offset="50%" stop-color="#93C5FD" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#17153B" stop-opacity="0.38"/>
     </linearGradient>
+
+    <!-- Translucent frosted glass document card gradients -->
+    <linearGradient id="card-fill" x1="48" y1="48" x2="144" y2="208" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.78"/>
+      <stop offset="50%" stop-color="#DBEAFE" stop-opacity="0.56"/>
+      <stop offset="100%" stop-color="#C7D2FE" stop-opacity="0.44"/>
+    </linearGradient>
+
+    <radialGradient id="card-sheen" cx="66" cy="68" r="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.48"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="card-rim" x1="48" y1="48" x2="144" y2="208" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.88"/>
+      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#E0E7FF" stop-opacity="0.20"/>
+    </linearGradient>
+
+    <!-- Unified pure-white tactile surface for mindmap fork & node -->
+    <linearGradient id="white-surface" x1="96" y1="78" x2="204" y2="206" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F4F7FB"/>
+    </linearGradient>
+
+    <!-- Coral-orange Plus focal node gradients -->
+    <linearGradient id="plus-grad" x1="152" y1="52" x2="204" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF7D45"/>
+      <stop offset="55%" stop-color="#FF5A26"/>
+      <stop offset="100%" stop-color="#EA4416"/>
+    </linearGradient>
+
+    <linearGradient id="plus-rim" x1="152" y1="50" x2="204" y2="114" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.54"/>
+      <stop offset="60%" stop-color="#FF8A65" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#9A2B0B" stop-opacity="0.28"/>
+    </linearGradient>
+
+    <!-- Studio elevation shadows clipped cleanly inside squircle -->
+    <filter id="card-shadow" x="28" y="34" width="136" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#0F172A" flood-opacity="0.30"/>
+    </filter>
+
+    <filter id="branch-shadow" x="76" y="58" width="148" height="170" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.30"/>
+    </filter>
+
+    <filter id="plus-node-shadow" x="128" y="38" width="100" height="104" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#17153B" flood-opacity="0.36"/>
+    </filter>
+
+    <filter id="cross-shadow" x="154" y="60" width="48" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#9A2B0B" flood-opacity="0.26"/>
+    </filter>
   </defs>
 
-  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#bg)"/>
+  <!-- Rounded Squircle Container -->
+  <g clip-path="url(#squircle-clip)">
+    <rect x="8" y="8" width="240" height="240" rx="54" fill="url(#bg-grad)"/>
+    <circle cx="64" cy="44" r="160" fill="url(#bg-glow)"/>
 
-  <!-- mindmap branches -->
-  <g stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.92">
-    <path d="M78 128 H118"/>
-    <path d="M118 128 C142 128 142 74 166 74"/>
-    <path d="M118 128 C142 128 142 128 166 128"/>
-    <path d="M118 128 C142 128 142 182 166 182"/>
-  </g>
+    <!-- Left Translucent Frosted Document Card -->
+    <g filter="url(#card-shadow)">
+      <rect x="48" y="48" width="96" height="160" rx="22" fill="url(#card-fill)"/>
+      <circle cx="66" cy="68" r="76" fill="url(#card-sheen)" clip-path="url(#card-clip)"/>
+      <rect x="49" y="49" width="94" height="158" rx="21" stroke="url(#card-rim)" stroke-width="2"/>
+    </g>
 
-  <!-- nodes -->
-  <g fill="#ffffff">
-    <circle cx="70" cy="128" r="20"/>
-    <circle cx="178" cy="74" r="14"/>
-    <circle cx="178" cy="128" r="14"/>
-    <circle cx="178" cy="182" r="14"/>
-  </g>
+    <!-- Bold Pure-White Mindmap Fork + Bottom Node (Seamless Unified Layer) -->
+    <g filter="url(#branch-shadow)">
+      <path d="M100 128 H122 C145 128 158 110 176 84" stroke="url(#white-surface)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M100 128 H122 C145 128 158 148 180 180" stroke="url(#white-surface)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="182" cy="182" r="26" fill="url(#white-surface)"/>
+    </g>
 
-  <!-- fork badge -->
-  <circle cx="196" cy="196" r="42" fill="url(#badge)" stroke="#ffffff" stroke-width="8"/>
-  <g stroke="#ffffff" stroke-width="9" stroke-linecap="round">
-    <path d="M196 178 V214"/>
-    <path d="M178 196 H214"/>
+    <!-- Top-Right Coral-Orange Plus Focal Node -->
+    <g filter="url(#plus-node-shadow)">
+      <circle cx="178" cy="82" r="34" fill="url(#plus-grad)"/>
+      <circle cx="178" cy="82" r="33.25" stroke="url(#plus-rim)" stroke-width="1.5"/>
+    </g>
+
+    <!-- Crisp Plus Symbol -->
+    <g filter="url(#cross-shadow)" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round">
+      <path d="M163 82 H193"/>
+      <path d="M178 67 V97"/>
+    </g>
+
+    <!-- Squircle Inner Specular Rim -->
+    <rect x="9" y="9" width="238" height="238" rx="53" stroke="url(#squircle-rim)" stroke-width="2"/>
   </g>
 </svg>

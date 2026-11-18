@@ -4,6 +4,11 @@
 > Entries below `0.4.0` are inherited from the upstream project and are kept for history.
 > From `0.4.0` on, versions are released independently by this fork.
 
+## 0.4.4
+
+- Redesign the extension icon and the light/dark editor title-bar icons.
+- Refine documentation and add Open VSX publishing to the release workflow.
+
 ## 0.4.3
 
 - Clarify the mouse gestures and the unbound Command Palette commands for folding nodes.
