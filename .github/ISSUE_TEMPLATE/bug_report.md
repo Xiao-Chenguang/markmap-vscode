@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: For bugs in Markmap Plus (the fork)
+about: Report a bug in Markmap Plus
 title: "[BUG] "
 labels: bug
 assignees: ''

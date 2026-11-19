@@ -4,7 +4,7 @@ Thanks for taking a look. This is a small project, so the process is short.
 
 ## Before you start
 
-- This is a fork of [markmap-vscode](https://github.com/markmap/markmap-vscode). Report Markmap Plus bugs and feature requests in [this repository](https://github.com/Xiao-Chenguang/markmap-vscode/issues).
+- Report Markmap Plus bugs and feature requests in [this repository](https://github.com/Xiao-Chenguang/markmap-vscode/issues).
 - For anything larger than a typo, open an issue first so we can agree on the approach.
 
 ## Setup

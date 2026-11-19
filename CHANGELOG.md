@@ -1,8 +1,8 @@
 # Change Log
 
-> **Markmap Plus** is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald, MIT licensed.
-> Entries below `0.4.0` are inherited from the upstream project and are kept for history.
-> From `0.4.0` on, versions are released independently by this fork.
+## Unreleased
+
+- Update the README, website, and extension listing to focus on what Markmap Plus offers. Move migration and project credits after usage and configuration.
 
 ## 0.4.4
 
@@ -23,14 +23,14 @@
 
 ## 0.4.0
 
-Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension ID.
+The first Markmap Plus release builds on `markmap-vscode` 0.3.1.
 
 - Renamed the extension to **Markmap Plus** (`cgxiao.markmap-plus`)
 - Renamed the command prefix from `markmap-vscode.*` to `markmap-plus.*`
 - Renamed the custom editor view type from `markmap-vscode.markmap` to `markmap-plus.markmap`
 - Renamed the settings from `markmap.*` to `markmapPlus.*` so both extensions can coexist in a settings file without clashing
-- New icon, so the fork is visually distinguishable from the original
-- Preserved the original MIT copyright notice and added the fork's own
+- Added a Markmap Plus icon
+- Preserved the original MIT copyright notice and added the Markmap Plus notice
 - Added single-key shortcuts while the preview has focus: <kbd>F</kbd> fit, <kbd>E</kbd> expand all, <kbd>C</kbd> collapse all, <kbd>+</kbd>/<kbd>-</kbd> zoom, <kbd>T</kbd>/<kbd>R</kbd> toggle the node under the cursor (removed in 0.4.2), <kbd>/</kbd> search, <kbd>?</kbd> shortcut help
 - Click anywhere on a node to fold it, not only on its fold anchor (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> toggles the whole subtree)
 - Added node search: matching branches stay open, everything else folds away, and the previous fold state is restored when the search is cleared
@@ -40,6 +40,8 @@ Forked from upstream `markmap-vscode` 0.3.1 and published under a new extension 
 - Keep multiple previews of the same document in sync when a branch is folded
 
 ## 0.3.1
+
+This and earlier entries record releases of [markmap-vscode](https://github.com/markmap/markmap-vscode).
 
 - Update `@markmap/*` to 1.1.0 and add e2e tests
 

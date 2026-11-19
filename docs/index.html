@@ -6,7 +6,7 @@
     <title>Markmap Plus — mindmap preview for VS Code</title>
     <meta
       name="description"
-      content="Markmap Plus is an actively maintained fork of markmap-vscode: preview your markdown as an interactive mind map in VS Code."
+      content="Interactive Markdown mind maps in VS Code with keyboard shortcuts, node search, and Markdown outline export."
     />
     <link rel="icon" href="icon.png" />
     <style>
@@ -109,13 +109,6 @@
         padding: 0;
         background: none;
       }
-      .note {
-        padding: 16px 20px;
-        border-left: 3px solid var(--accent);
-        border-radius: 0 10px 10px 0;
-        background: var(--panel);
-        color: var(--muted);
-      }
       footer {
         margin-top: 64px;
         padding-top: 24px;
@@ -142,92 +135,6 @@
         <a class="btn" href="https://marketplace.visualstudio.com/items?itemName=cgxiao.markmap-plus">Install from VS Code Marketplace</a>
         <a class="btn secondary" href="https://github.com/Xiao-Chenguang/markmap-vscode">Source on GitHub</a>
       </div>
-
-      <div class="note">
-        Markmap Plus is an independent fork of
-        <a href="https://github.com/markmap/markmap-vscode">markmap-vscode</a> by Gerald, MIT licensed.
-        It is not affiliated with or endorsed by the original author.
-      </div>
-
-      <h2>Why a fork?</h2>
-      <table>
-        <tr>
-          <th></th>
-          <th>markmap-vscode (upstream)</th>
-          <th>Markmap Plus</th>
-        </tr>
-        <tr>
-          <td>Extension ID</td>
-          <td><code>gera2ld.markmap-vscode</code></td>
-          <td><code>cgxiao.markmap-plus</code></td>
-        </tr>
-        <tr>
-          <td>Settings prefix</td>
-          <td><code>markmap.*</code></td>
-          <td><code>markmapPlus.*</code></td>
-        </tr>
-        <tr>
-          <td>Keyboard shortcuts in the preview</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td>Click anywhere on a node to fold it</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td>Node search / filter</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td>Fold state remembered per file</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td>Markdown outline export</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td>Theme and layout settings</td>
-          <td>frontmatter only</td>
-          <td>✅ settings too</td>
-        </tr>
-        <tr>
-          <td>Multiple previews stay in sync</td>
-          <td>—</td>
-          <td>✅</td>
-        </tr>
-      </table>
-
-      <h2>Migrating from markmap-vscode</h2>
-      <ol>
-        <li>
-          Optionally disable the original <code>markmap-vscode</code> to avoid duplicate commands
-          and editor choices. The extensions use separate IDs and settings.
-        </li>
-        <li>Install Markmap Plus.</li>
-        <li>
-          Rename your settings — the keys changed so the two extensions can coexist:
-          <table>
-            <tr>
-              <th>Old key</th>
-              <th>New key</th>
-            </tr>
-            <tr>
-              <td><code>markmap.defaultOptions</code></td>
-              <td><code>markmapPlus.defaultOptions</code></td>
-            </tr>
-            <tr>
-              <td><code>markmap.customCSS</code></td>
-              <td><code>markmapPlus.customCSS</code></td>
-            </tr>
-          </table>
-        </li>
-      </ol>
 
       <h2>Getting started</h2>
       <p>Open a Markdown file and run <strong>Markmap Plus: Open as markmap</strong> from the
@@ -292,10 +199,40 @@
         to exported HTML; custom CSS cannot reach inside the map.
       </p>
 
+      <h2>Migrating from markmap-vscode</h2>
+      <ol>
+        <li>Install Markmap Plus (<code>cgxiao.markmap-plus</code>).</li>
+        <li>
+          Optionally disable <code>markmap-vscode</code> (<code>gera2ld.markmap-vscode</code>)
+          to avoid duplicate commands and editor choices.
+        </li>
+        <li>
+          Copy your settings to the new keys.
+          <table>
+            <tr>
+              <th>Old key</th>
+              <th>New key</th>
+            </tr>
+            <tr>
+              <td><code>markmap.defaultOptions</code></td>
+              <td><code>markmapPlus.defaultOptions</code></td>
+            </tr>
+            <tr>
+              <td><code>markmap.customCSS</code></td>
+              <td><code>markmapPlus.customCSS</code></td>
+            </tr>
+          </table>
+        </li>
+      </ol>
+
       <footer>
-        Built on <a href="https://markmap.js.org/">markmap</a>. Original VS Code integration by
-        <a href="https://github.com/gera2ld">Gerald</a>. MIT licensed — the original copyright
-        notice is preserved.
+        <p>
+          Markmap Plus builds on Gerald's
+          <a href="https://github.com/markmap/markmap-vscode">markmap-vscode</a> and adds features
+          such as preview shortcuts, node search, and Markdown outline export. It uses
+          <a href="https://markmap.js.org/">markmap</a> to render mind maps.
+        </p>
+        <p>MIT licensed. See the <a href="https://github.com/Xiao-Chenguang/markmap-vscode/blob/main/LICENSE">license and copyright notices</a>.</p>
       </footer>
     </div>
   </body>

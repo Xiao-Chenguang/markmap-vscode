@@ -4,55 +4,14 @@
 
 [Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=cgxiao.markmap-plus) · [Project website](https://xiao-chenguang.github.io/markmap-vscode/) · [Source and issues](https://github.com/Xiao-Chenguang/markmap-vscode)
 
-> **Markmap Plus is an independent fork of [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald ([@gera2ld](https://github.com/gera2ld)).**
-> It is **not** affiliated with or endorsed by the original author. The original project is MIT licensed, and so is this fork.
-> The fork builds on the upstream feature set and adds improvements of its own.
-
-This extension integrates [markmap](https://markmap.js.org/) into VS Code: preview your markdown as an interactive mind map.
-
-## Why a fork?
-
-Markmap Plus is published under its own extension ID so it can be developed independently. It builds on the original extension and adds the features below.
-
-| | markmap-vscode (upstream) | Markmap Plus (this fork) |
-| --- | --- | --- |
-| Extension ID | `gera2ld.markmap-vscode` | `cgxiao.markmap-plus` |
-| Settings prefix | `markmap.*` | `markmapPlus.*` |
-| Keyboard shortcuts in the preview | — | ✅ |
-| Click anywhere on a node to fold it | — | ✅ |
-| Node search / filter | — | ✅ |
-| Fold state remembered per file | — | ✅ |
-| Markdown outline export | — | ✅ |
-| Theme and layout settings | frontmatter only | ✅ settings too |
-| Multiple previews stay in sync | — | ✅ |
-
-## Migrating from markmap-vscode
-
-1. Optionally disable the original `markmap-vscode` extension to avoid duplicate commands and editor choices. The two extensions use separate IDs and settings.
-2. Install **Markmap Plus**.
-3. Copy your settings over — the keys were renamed to avoid clashing with the original extension:
-
-   | Old key | New key |
-   | --- | --- |
-   | `markmap.defaultOptions` | `markmapPlus.defaultOptions` |
-   | `markmap.customCSS` | `markmapPlus.customCSS` |
-
-   In `settings.json`:
-
-   ```jsonc
-   {
-     "markmapPlus.defaultOptions": "{ \"colorFreezeLevel\": 2 }",
-     "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }"
-   }
-   ```
-
-4. Commands moved from the `Markmap` category to `Markmap Plus` in the Command Palette.
+Markmap Plus previews Markdown as an interactive mind map in VS Code.
 
 ## Features
 
-- Preview markdown files as markmap
-- Edit markdown files in a text editor and the markmap will update on the fly
-- Themes and layouts, set in frontmatter
+- Preview Markdown and see edits reflected as you type
+- Use keyboard shortcuts, fold branches, and search nodes in the preview
+- Restore folded branches per file and synchronize folding across open previews
+- Set themes and layouts in VS Code settings or document frontmatter
 - Export as HTML, SVG, PNG or a Markdown outline
 - Preview without a network connection (remote images and links still require access to their sources)
 
@@ -132,10 +91,31 @@ markmap-view {
 
 Leave either empty to use the document's frontmatter, or the default. If you clear a previously selected theme or layout, reopen the preview to restore the document's value.
 
+## Migrating from markmap-vscode
+
+1. Install **Markmap Plus** (`cgxiao.markmap-plus`).
+2. Optionally disable `markmap-vscode` (`gera2ld.markmap-vscode`) to avoid duplicate commands and editor choices. The two extensions use separate IDs and settings.
+3. Copy your settings to the new keys.
+
+   | Old key | New key |
+   | --- | --- |
+   | `markmap.defaultOptions` | `markmapPlus.defaultOptions` |
+   | `markmap.customCSS` | `markmapPlus.customCSS` |
+
+   In `settings.json`:
+
+   ```jsonc
+   {
+     "markmapPlus.defaultOptions": "{ \"colorFreezeLevel\": 2 }",
+     "markmapPlus.customCSS": "markmap-view { --mm-link: rebeccapurple; }"
+   }
+   ```
+
+4. Look for commands under `Markmap Plus` in the Command Palette.
+
 ## Credits
 
-- [markmap](https://github.com/markmap/markmap) — the rendering engine
-- [markmap-vscode](https://github.com/markmap/markmap-vscode) by Gerald — the original VS Code integration this fork is based on
+Markmap Plus builds on Gerald's [markmap-vscode](https://github.com/markmap/markmap-vscode) and adds features such as preview shortcuts, node search, and Markdown outline export. It uses [markmap](https://github.com/markmap/markmap) to render mind maps.
 
 ## License
 
