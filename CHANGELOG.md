@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.4.5
 
 - Update the README, website, and extension listing to focus on what Markmap Plus offers. Move migration and project credits after usage and configuration.
 

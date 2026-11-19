@@ -1,6 +1,6 @@
 {
   "name": "markmap-plus",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Interactive Markdown mind maps in VS Code with keyboard shortcuts, node search, and Markdown outline export.",
   "author": "Xiao-Chenguang",
   "contributors": [
